@@ -186,40 +186,40 @@
 
 /* 车机端适配 */
 .create-bot-container.car .create-bot-card {
-  max-width: 700px;
+  max-width: 800px;
   padding: 56px 48px;
 }
 
 .create-bot-container.car .create-bot-title {
-  font-size: 32px;
+  font-size: 36px;
 }
 
 .create-bot-container.car .bot-avatar-large {
-  width: 140px;
-  height: 140px;
-  font-size: 72px;
+  width: 160px;
+  height: 160px;
+  font-size: 80px;
 }
 
 .create-bot-container.car .bot-name-preview {
-  font-size: 28px;
+  font-size: 32px;
 }
 
 .create-bot-container.car .input {
-  padding: 16px;
-  font-size: 18px;
+  padding: 20px;
+  font-size: 22px;
 }
 
 .create-bot-container.car .avatar-grid {
   grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
+  gap: 16px;
 }
 
 .create-bot-container.car .avatar-option {
-  font-size: 40px;
-  padding: 24px;
+  font-size: 48px;
+  /* 保持aspect-ratio，不添加padding */
 }
 
 .create-bot-container.car .create-btn {
-  padding: 20px;
-  font-size: 18px;
+  padding: 24px;
+  font-size: 22px;
 }

@@ -403,3 +403,55 @@
     display: none;
   }
 }
+
+/* 车机端语音输入按钮 */
+.voice-btn-large {
+  flex: 1;
+  padding: 32px;
+  border-radius: 20px;
+  border: none;
+  background: var(--primary-red);
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.voice-btn-large:hover {
+  background: var(--primary-red-hover);
+  transform: scale(1.02);
+}
+
+.voice-btn-large:active {
+  transform: scale(0.98);
+}
+
+.voice-icon {
+  font-size: 40px;
+}
+
+.voice-text {
+  font-size: 28px;
+}
+
+.keyboard-toggle-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  font-size: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.keyboard-toggle-btn:hover {
+  border-color: var(--primary-red);
+  background: var(--primary-red-light);
+}

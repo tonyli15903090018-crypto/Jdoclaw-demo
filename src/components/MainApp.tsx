@@ -167,30 +167,46 @@ const MainApp = ({
       {/* 底部输入区 */}
       <footer className="main-footer">
         <div className="input-container">
-          <textarea
-            className="chat-input"
-            placeholder="输入消息... (Enter 发送)"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            rows={1}
-          />
-          
-          <button
-            className="send-btn"
-            onClick={handleSend}
-            disabled={!input.trim()}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          {deviceType === 'car' ? (
+            /* 车机端：大按钮语音输入 */
+            <>
+              <button className="voice-btn-large" onClick={() => alert('语音输入功能（开发中）')}>
+                <span className="voice-icon">🎤</span>
+                <span className="voice-text">按住说话</span>
+              </button>
+              <button className="keyboard-toggle-btn" onClick={() => alert('切换键盘输入')}>
+                ⌨️
+              </button>
+            </>
+          ) : (
+            /* 电脑端和手机端：文本输入 */
+            <>
+              <textarea
+                className="chat-input"
+                placeholder="输入消息... (Enter 发送)"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                rows={1}
               />
-            </svg>
-          </button>
+              
+              <button
+                className="send-btn"
+                onClick={handleSend}
+                disabled={!input.trim()}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </>
+          )}
         </div>
       </footer>
     </div>
