@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react'
 import Login from './components/Login'
 import Purchase from './components/Purchase'
 import Recharge from './components/Recharge'
+import CreateBot from './components/CreateBot'
 import MainApp from './components/MainApp'
 import type { UserInfo, DeviceType } from './types'
 import './App.css'
 
-type AppStage = 'login' | 'purchase' | 'recharge' | 'main'
+type AppStage = 'login' | 'purchase' | 'recharge' | 'createBot' | 'main'
 
 function App() {
   const [stage, setStage] = useState<AppStage>('login')
@@ -60,6 +61,14 @@ function App() {
     const newUserInfo = { ...userInfo, apiBalance: userInfo.apiBalance + amount }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+    setStage('createBot')
+    localStorage.setItem('app_stage', 'createBot')
+  }
+
+  const handleCreateBot = (botName: string, botAvatar: string) => {
+    const newUserInfo = { ...userInfo, botName, botAvatar }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
     setStage('main')
     localStorage.setItem('app_stage', 'main')
   }
@@ -91,6 +100,9 @@ function App() {
       )}
       {stage === 'recharge' && (
         <Recharge onRecharge={handleRecharge} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      )}
+      {stage === 'createBot' && (
+        <CreateBot onComplete={handleCreateBot} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       )}
       {stage === 'main' && (
         <MainApp

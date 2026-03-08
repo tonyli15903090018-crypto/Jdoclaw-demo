@@ -22,7 +22,7 @@ const MainApp = ({
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: `你好${userInfo.username}！我是 Jdoclaw AI 助手，有什么可以帮助你的吗？`,
+      text: `你好${userInfo.username}！我是${userInfo.botName || 'Jdoclaw AI'} 助手，有什么可以帮助你的吗？`,
       sender: 'ai',
       timestamp: new Date()
     }
@@ -128,7 +128,7 @@ const MainApp = ({
                 className={`message-item ${message.sender === 'user' ? 'user-message' : 'ai-message'}`}
               >
                 <div className="message-avatar">
-                  {message.sender === 'user' ? '👤' : '🤖'}
+                  {message.sender === 'user' ? '👤' : (userInfo.botAvatar || '🤖')}
                 </div>
                 <div className="message-content">
                   <div className="message-bubble">
@@ -143,7 +143,7 @@ const MainApp = ({
             
             {isTyping && (
               <div className="message-item ai-message">
-                <div className="message-avatar">🤖</div>
+                <div className="message-avatar">{userInfo.botAvatar || '🤖'}</div>
                 <div className="message-content">
                   <div className="typing-indicator">
                     <span></span>

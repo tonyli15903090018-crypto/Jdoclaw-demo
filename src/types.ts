@@ -7,6 +7,8 @@ export interface UserInfo {
   email: string
   hasPurchased: boolean
   apiBalance: number
+  botName?: string
+  botAvatar?: string
 }
 
 // 消息类型
