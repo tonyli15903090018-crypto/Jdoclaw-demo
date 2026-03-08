@@ -12,18 +12,12 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
-  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-
-    // 模拟 API 调用
-    setTimeout(() => {
-      const mockToken = `token_${Date.now()}`
-      onLogin(mockToken)
-      setLoading(false)
-    }, 1000)
+    // 直接登录，无需验证
+    const mockToken = `demo_token_${Date.now()}`
+    onLogin(mockToken)
   }
 
   const toggleMode = () => {
@@ -86,42 +80,39 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
           <form onSubmit={handleSubmit} className="form">
             {!isLogin && (
               <div className="form-group">
-                <label htmlFor="username" className="form-label">用户名</label>
+                <label htmlFor="username" className="form-label">用户名（可选）</label>
                 <input
                   id="username"
                   type="text"
                   className="input"
-                  placeholder="输入用户名"
+                  placeholder="输入用户名（可选）"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  required
                 />
               </div>
             )}
 
             <div className="form-group">
-              <label htmlFor="email" className="form-label">邮箱</label>
+              <label htmlFor="email" className="form-label">邮箱（可选）</label>
               <input
                 id="email"
                 type="email"
                 className="input"
-                placeholder="your@email.com"
+                placeholder="your@email.com（可选）"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="password" className="form-label">密码</label>
+              <label htmlFor="password" className="form-label">密码（可选）</label>
               <input
                 id="password"
                 type="password"
                 className="input"
-                placeholder="••••••••"
+                placeholder="••••••••（可选）"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
             </div>
 
@@ -135,12 +126,8 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
               </div>
             )}
 
-            <button type="submit" className="btn btn-primary submit-btn" disabled={loading}>
-              {loading ? (
-                <span className="loading-spinner"></span>
-              ) : (
-                isLogin ? '登录' : '注册'
-              )}
+            <button type="submit" className="btn btn-primary submit-btn">
+              {isLogin ? '立即登录' : '立即注册'}
             </button>
           </form>
 
