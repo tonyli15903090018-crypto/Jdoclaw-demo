@@ -2,6 +2,7 @@ import { useState } from 'react'
 import DeviceSwitcher from './DeviceSwitcher'
 import type { UserInfo, UsageRecord, DeviceType } from '../types'
 import './Profile.css'
+import './ProfileCar.css'
 
 interface ProfileProps {
   userInfo: UserInfo
@@ -55,7 +56,72 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
       <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
 
       <div className="profile-card">
-        {deviceType === 'desktop' ? (
+        {deviceType === 'car' ? (
+          /* 车机端专用布局 */
+          <>
+            <div className="profile-header car-header">
+              <button className="back-btn car-back-btn" onClick={onBack}>
+                ← 返回
+              </button>
+              <h1 className="profile-title car-title">个人中心</h1>
+            </div>
+
+            {/* 大卡片区域 - 横向2列 */}
+            <div className="car-grid">
+              {/* 左侧：用户信息+余额 */}
+              <div className="car-left-panel">
+                <div className="car-user-card">
+                  <div className="car-avatar">{userInfo.botAvatar || '👤'}</div>
+                  <h2 className="car-username">{userInfo.username}</h2>
+                </div>
+                
+                <div className="car-balance-card">
+                  <span className="car-balance-label">余额</span>
+                  <span className="car-balance-value">¥{userInfo.apiBalance.toFixed(2)}</span>
+                </div>
+
+                <div className="car-subscription-card">
+                  <div className="car-sub-item">
+                    <span className="car-sub-label">套餐</span>
+                    <span className="car-sub-value">{planNames[userInfo.subscriptionPlan || 'yearly']}</span>
+                  </div>
+                  <div className="car-sub-item">
+                    <span className="car-sub-label">到期</span>
+                    <span className="car-sub-value">{userInfo.subscriptionExpiry || '2027-03-08'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 右侧：快速操作 */}
+              <div className="car-right-panel">
+                <h3 className="car-panel-title">快速操作</h3>
+                
+                <button className="car-action-btn primary" onClick={onRenew}>
+                  <span className="car-btn-icon">💳</span>
+                  <span className="car-btn-text">续费套餐</span>
+                </button>
+
+                <div className="car-model-section">
+                  <h4 className="car-section-title">当前模型</h4>
+                  <div className="car-model-display">
+                    <span className="car-current-model">{selectedModel}</span>
+                  </div>
+                  <div className="car-model-quick">
+                    {models.filter(m => m !== selectedModel).map((model) => (
+                      <button
+                        key={model}
+                        className="car-model-btn"
+                        onClick={() => handleModelChange(model)}
+                      >
+                        {model}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : deviceType === 'desktop' ? (
           <>
             <div className="profile-sidebar">
               <div className="profile-header">
