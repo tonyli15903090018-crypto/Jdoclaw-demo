@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './Purchase.css'
 
 interface PurchaseProps {
@@ -6,7 +7,19 @@ interface PurchaseProps {
   toggleDarkMode: () => void
 }
 
+type PlanType = 'monthly' | 'quarterly' | 'yearly'
+
 const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => {
+  const [selectedPlan, setSelectedPlan] = useState<PlanType>('yearly')
+  const [autoRenew, setAutoRenew] = useState(true)
+
+  const plans = [
+    { type: 'monthly' as PlanType, name: '月付', price: 33, period: '月' },
+    { type: 'quarterly' as PlanType, name: '季付', price: 66, period: '季', badge: '省 17%' },
+    { type: 'yearly' as PlanType, name: '年付', price: 99, period: '年', badge: '最划算' }
+  ]
+
+  const currentPlan = plans.find(p => p.type === selectedPlan)!
   return (
     <div className="purchase-container">
       <button className="theme-toggle" onClick={toggleDarkMode}>
@@ -46,21 +59,47 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
 
         <div className="pricing-card">
           <div className="pricing-badge">推荐</div>
-          <h2 className="pricing-name">Jdoclaw 专业版</h2>
+          <h2 className="pricing-name">Jdoclaw 沙箱配置服务</h2>
+
+          <div className="plan-selector">
+            {plans.map((plan) => (
+              <button
+                key={plan.type}
+                className={`plan-option ${selectedPlan === plan.type ? 'active' : ''}`}
+                onClick={() => setSelectedPlan(plan.type)}
+              >
+                {plan.badge && <span className="plan-badge">{plan.badge}</span>}
+                <span className="plan-name">{plan.name}</span>
+                <span className="plan-price">¥{plan.price}/{plan.period}</span>
+              </button>
+            ))}
+          </div>
+
           <div className="pricing-price">
             <span className="price-currency">¥</span>
-            <span className="price-amount">99</span>
-            <span className="price-period">/永久</span>
+            <span className="price-amount">{currentPlan.price}</span>
+            <span className="price-period">/{currentPlan.period}</span>
+          </div>
+
+          <div className="auto-renew">
+            <label className="renew-checkbox">
+              <input
+                type="checkbox"
+                checked={autoRenew}
+                onChange={(e) => setAutoRenew(e.target.checked)}
+              />
+              <span>自动续费（可随时取消）</span>
+            </label>
           </div>
 
           <ul className="feature-list">
             <li className="feature-item">
               <span className="feature-icon">✅</span>
-              <span>AI 智能对话（无限次）</span>
+              <span>沙箱环境一键配置</span>
             </li>
             <li className="feature-item">
               <span className="feature-icon">✅</span>
-              <span>智能家居设备控制</span>
+              <span>无需对接飞书/QQ/微信</span>
             </li>
             <li className="feature-item">
               <span className="feature-icon">✅</span>
@@ -68,7 +107,7 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
             </li>
             <li className="feature-item">
               <span className="feature-icon">✅</span>
-              <span>语音助手功能</span>
+              <span>智能家居设备控制</span>
             </li>
             <li className="feature-item">
               <span className="feature-icon">✅</span>
@@ -79,8 +118,8 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
               <span>数据加密存储</span>
             </li>
             <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>7×24 技术支持</span>
+              <span className="feature-icon">💰</span>
+              <span>API 费用独立计费，明细清晰</span>
             </li>
           </ul>
 
