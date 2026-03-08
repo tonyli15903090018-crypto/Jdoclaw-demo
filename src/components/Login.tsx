@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import DeviceSwitcher from './DeviceSwitcher'
+import type { DeviceType } from '../types'
 import './Login.css'
 
 interface LoginProps {
@@ -8,6 +10,7 @@ interface LoginProps {
 }
 
 const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
   const [isLogin, setIsLogin] = useState(true)
   const [phone, setPhone] = useState('138****8888')
   const [code, setCode] = useState('123456')
@@ -23,6 +26,8 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>
+      
+      <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
 
       <div className="login-card">
         <div className="login-header">

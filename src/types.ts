@@ -9,6 +9,9 @@ export interface UserInfo {
   apiBalance: number
   botName?: string
   botAvatar?: string
+  subscriptionPlan?: 'monthly' | 'quarterly' | 'yearly'
+  subscriptionExpiry?: string
+  selectedModel?: string
 }
 
 // 消息类型
@@ -17,4 +20,14 @@ export interface Message {
   text: string
   sender: 'user' | 'ai'
   timestamp: Date
+}
+
+// 消费记录
+export interface UsageRecord {
+  id: string
+  timestamp: Date
+  model: string
+  tokens: number
+  cost: number
+  type: string
 }

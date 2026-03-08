@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import DeviceSwitcher from './DeviceSwitcher'
+import type { DeviceType } from '../types'
 import './CreateBot.css'
 
 interface CreateBotProps {
@@ -10,6 +12,7 @@ interface CreateBotProps {
 const CreateBot = ({ onComplete, isDarkMode, toggleDarkMode }: CreateBotProps) => {
   const [botName, setBotName] = useState('小智')
   const [selectedAvatar, setSelectedAvatar] = useState('🤖')
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
 
   const avatars = ['🤖', '👨‍💼', '👩‍💼', '🦊', '🐱', '🐶', '🦁', '🐼', '🦄', '🌟', '💎', '🎯']
 
@@ -23,6 +26,8 @@ const CreateBot = ({ onComplete, isDarkMode, toggleDarkMode }: CreateBotProps) =
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>
+      
+      <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
 
       <div className="create-bot-card">
         <div className="create-bot-header">

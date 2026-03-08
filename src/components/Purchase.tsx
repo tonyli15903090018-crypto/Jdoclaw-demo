@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import DeviceSwitcher from './DeviceSwitcher'
+import type { DeviceType } from '../types'
 import './Purchase.css'
 
 interface PurchaseProps {
@@ -12,6 +14,7 @@ type PlanType = 'monthly' | 'quarterly' | 'yearly'
 const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => {
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('yearly')
   const [autoRenew, setAutoRenew] = useState(true)
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
 
   const plans = [
     { type: 'monthly' as PlanType, name: '月付', price: 33, period: '月' },
@@ -25,7 +28,8 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>
-
+      
+      <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
       <div className="purchase-card">
         <div className="purchase-header">
           <h1 className="purchase-title">选择您的套餐</h1>

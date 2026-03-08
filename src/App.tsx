@@ -4,10 +4,11 @@ import Purchase from './components/Purchase'
 import Recharge from './components/Recharge'
 import CreateBot from './components/CreateBot'
 import MainApp from './components/MainApp'
+import Profile from './components/Profile'
 import type { UserInfo, DeviceType } from './types'
 import './App.css'
 
-type AppStage = 'login' | 'purchase' | 'recharge' | 'createBot' | 'main'
+type AppStage = 'login' | 'purchase' | 'recharge' | 'createBot' | 'main' | 'profile'
 
 function App() {
   const [stage, setStage] = useState<AppStage>('login')
@@ -50,7 +51,14 @@ function App() {
   }
 
   const handlePurchase = () => {
-    const newUserInfo = { ...userInfo, hasPurchased: true }
+    const expiry = new Date()
+    expiry.setFullYear(expiry.getFullYear() + 1)
+    const newUserInfo = { 
+      ...userInfo, 
+      hasPurchased: true,
+      subscriptionPlan: 'yearly' as const,
+      subscriptionExpiry: expiry.toLocaleDateString('zh-CN')
+    }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
     setStage('recharge')
@@ -66,11 +74,37 @@ function App() {
   }
 
   const handleCreateBot = (botName: string, botAvatar: string) => {
-    const newUserInfo = { ...userInfo, botName, botAvatar }
+    const newUserInfo = { 
+      ...userInfo, 
+      botName, 
+      botAvatar,
+      selectedModel: 'GPT-4'
+    }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
     setStage('main')
     localStorage.setItem('app_stage', 'main')
+  }
+
+  const handleOpenProfile = () => {
+    setStage('profile')
+    localStorage.setItem('app_stage', 'profile')
+  }
+
+  const handleCloseProfile = () => {
+    setStage('main')
+    localStorage.setItem('app_stage', 'main')
+  }
+
+  const handleRenew = () => {
+    setStage('purchase')
+    localStorage.setItem('app_stage', 'purchase')
+  }
+
+  const handleModelChange = (model: string) => {
+    const newUserInfo = { ...userInfo, selectedModel: model }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
   }
 
   const handleLogout = () => {
@@ -110,6 +144,17 @@ function App() {
           deviceType={deviceType}
           onDeviceChange={setDeviceType}
           onLogout={handleLogout}
+          onOpenProfile={handleOpenProfile}
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
+      )}
+      {stage === 'profile' && (
+        <Profile
+          userInfo={userInfo}
+          onBack={handleCloseProfile}
+          onRenew={handleRenew}
+          onModelChange={handleModelChange}
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
         />
