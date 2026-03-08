@@ -23,6 +23,11 @@
   gap: 12px;
 }
 
+/* 隐藏header中的设备切换器，使用全局底部浮动的 */
+.header-center {
+  display: none !important;
+}
+
 .model-selector {
   position: relative;
 }

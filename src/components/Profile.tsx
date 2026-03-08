@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import DeviceSwitcher from './DeviceSwitcher'
 import type { UserInfo, UsageRecord, DeviceType } from '../types'
 import './Profile.css'
 import './ProfileCar.css'
@@ -11,11 +10,11 @@ interface ProfileProps {
   onModelChange: (model: string) => void
   isDarkMode: boolean
   toggleDarkMode: () => void
+  deviceType: DeviceType
 }
 
-const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleDarkMode }: ProfileProps) => {
+const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleDarkMode, deviceType }: ProfileProps) => {
   const [selectedModel, setSelectedModel] = useState(userInfo.selectedModel || 'GPT-4')
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
   
   const models = ['GPT-4', 'GPT-3.5', 'Claude-3', 'Gemini-Pro']
   
@@ -53,7 +52,6 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
         {isDarkMode ? '☀️' : '🌙'}
       </button>
       
-      <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
 
       <div className="profile-card">
         {deviceType === 'car' ? (

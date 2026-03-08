@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import DeviceSwitcher from './DeviceSwitcher'
-import type { DeviceType } from '../types'
 import './Recharge.css'
 
 interface RechargeProps {
@@ -11,17 +9,15 @@ interface RechargeProps {
 
 const Recharge = ({ onRecharge, isDarkMode, toggleDarkMode }: RechargeProps) => {
   const [selectedAmount, setSelectedAmount] = useState(100)
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
 
   const amounts = [50, 100, 200, 500]
 
   return (
-    <div className={`recharge-container ${deviceType}`}>
+    <div className="recharge-container">
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>
       
-      <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
       <div className="recharge-card">
         <div className="recharge-header">
           <h1 className="recharge-title">API 充值</h1>

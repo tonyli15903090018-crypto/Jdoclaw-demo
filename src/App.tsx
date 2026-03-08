@@ -5,6 +5,7 @@ import Recharge from './components/Recharge'
 import CreateBot from './components/CreateBot'
 import MainApp from './components/MainApp'
 import Profile from './components/Profile'
+import DeviceSwitcher from './components/DeviceSwitcher'
 import type { UserInfo, DeviceType } from './types'
 import './App.css'
 
@@ -126,6 +127,8 @@ function App() {
 
   return (
     <div className="app">
+      <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
+      
       {stage === 'login' && (
         <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       )}
@@ -157,6 +160,7 @@ function App() {
           onModelChange={handleModelChange}
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
+          deviceType={deviceType}
         />
       )}
     </div>
