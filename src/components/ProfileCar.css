@@ -1,4 +1,4 @@
-/* 车机端专用布局 - 完整功能，超大元素 */
+/* 车机端专用布局 - 左侧操作，右侧信息 */
 .profile-container.car {
   padding: 32px 48px;
   background: var(--bg-primary);
@@ -34,61 +34,64 @@
   color: var(--text-primary);
 }
 
-/* 顶部用户信息+余额 */
-.car-top-row {
+/* 左右两栏布局 */
+.car-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 480px 1fr;
   gap: 32px;
-  margin-bottom: 32px;
+}
+
+/* 左侧操作面板 */
+.car-left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .car-user-card {
   background: var(--bg-secondary);
   border-radius: 24px;
-  padding: 40px;
+  padding: 32px;
   text-align: center;
   border: 3px solid var(--border-color);
 }
 
 .car-avatar {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: var(--primary-red-light);
   border: 4px solid var(--primary-red);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64px;
-  margin: 0 auto 20px;
+  font-size: 56px;
+  margin: 0 auto 16px;
 }
 
 .car-username {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .car-user-phone {
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text-secondary);
 }
 
 .car-balance-card {
   background: linear-gradient(135deg, var(--primary-red) 0%, #E62E2E 100%);
   border-radius: 24px;
-  padding: 48px;
+  padding: 40px;
   text-align: center;
   box-shadow: 0 8px 32px rgba(255, 59, 59, 0.3);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .car-balance-label {
   display: block;
-  font-size: 24px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 12px;
   font-weight: 600;
@@ -96,28 +99,15 @@
 
 .car-balance-value {
   display: block;
-  font-size: 64px;
+  font-size: 56px;
   font-weight: 700;
   color: white;
 }
 
-/* 各个section */
-.car-section {
-  margin-bottom: 32px;
-}
-
-.car-section-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-}
-
-/* 订阅信息 */
 .car-subscription-card {
   background: var(--bg-secondary);
   border-radius: 24px;
-  padding: 32px;
+  padding: 28px;
   border: 3px solid var(--border-color);
 }
 
@@ -125,23 +115,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0;
+  padding: 12px 0;
   border-bottom: 2px solid var(--border-color);
 }
 
-.car-sub-item:last-of-type {
+.car-sub-item:last-child {
   border-bottom: none;
-  margin-bottom: 24px;
 }
 
 .car-sub-label {
-  font-size: 22px;
+  font-size: 20px;
   color: var(--text-secondary);
   font-weight: 600;
 }
 
 .car-sub-value {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -179,58 +168,78 @@
   font-size: 26px;
 }
 
-/* AI模型网格 */
-.car-model-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+/* AI模型选择 */
+.car-model-section {
+  background: var(--bg-secondary);
+  border-radius: 24px;
+  padding: 28px;
+  border: 3px solid var(--border-color);
 }
 
-.car-model-card {
-  background: var(--bg-secondary);
+.car-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.car-model-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.car-model-btn {
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: 16px;
   border: 3px solid var(--border-color);
-  border-radius: 20px;
-  padding: 32px;
+  background: var(--bg-primary);
   cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
-  text-align: center;
 }
 
-.car-model-card.active {
+.car-model-btn.active {
   background: var(--primary-red-light);
   border-color: var(--primary-red);
 }
 
-.car-model-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+.car-model-btn:hover {
+  transform: translateX(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .car-model-name {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.car-model-card.active .car-model-name {
+.car-model-btn.active .car-model-name {
   color: var(--primary-red);
 }
 
 .car-model-check {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 32px;
+  font-size: 28px;
   color: var(--primary-red);
 }
 
-/* 消费记录 */
+/* 右侧信息面板 */
+.car-right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
 .car-usage-list {
   background: var(--bg-secondary);
   border-radius: 24px;
   padding: 24px;
   border: 3px solid var(--border-color);
+  flex: 1;
 }
 
 .car-usage-item {

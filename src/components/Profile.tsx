@@ -54,75 +54,73 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
 
       <div className="profile-card">
         {deviceType === 'car' ? (
-          /* 车机端：完整功能，超大元素 */
+          /* 车机端：左侧操作，右侧信息展示 */
           <>
             <div className="car-header">
               <button className="car-back-btn" onClick={onBack}>← 返回</button>
               <h1 className="car-title">个人中心</h1>
             </div>
 
-            {/* 顶部用户信息+余额 */}
-            <div className="car-top-row">
-              <div className="car-user-card">
-                <div className="car-avatar">{userInfo.botAvatar || '👤'}</div>
-                <h2 className="car-username">{userInfo.username}</h2>
-                <p className="car-user-phone">{userInfo.email}</p>
-              </div>
-              
-              <div className="car-balance-card">
-                <span className="car-balance-label">API余额</span>
-                <span className="car-balance-value">¥{userInfo.apiBalance.toFixed(2)}</span>
-              </div>
-            </div>
+            <div className="car-layout">
+              {/* 左侧：用户信息+操作区 */}
+              <div className="car-left-panel">
+                <div className="car-user-card">
+                  <div className="car-avatar">{userInfo.botAvatar || '👤'}</div>
+                  <h2 className="car-username">{userInfo.username}</h2>
+                  <p className="car-user-phone">{userInfo.email}</p>
+                </div>
+                
+                <div className="car-balance-card">
+                  <span className="car-balance-label">API余额</span>
+                  <span className="car-balance-value">¥{userInfo.apiBalance.toFixed(2)}</span>
+                </div>
 
-            {/* 订阅信息 */}
-            <div className="car-section">
-              <h3 className="car-section-title">订阅信息</h3>
-              <div className="car-subscription-card">
-                <div className="car-sub-item">
-                  <span className="car-sub-label">当前套餐</span>
-                  <span className="car-sub-value">{planNames[userInfo.subscriptionPlan || 'yearly']}</span>
+                <div className="car-subscription-card">
+                  <div className="car-sub-item">
+                    <span className="car-sub-label">当前套餐</span>
+                    <span className="car-sub-value">{planNames[userInfo.subscriptionPlan || 'yearly']}</span>
+                  </div>
+                  <div className="car-sub-item">
+                    <span className="car-sub-label">到期时间</span>
+                    <span className="car-sub-value">{userInfo.subscriptionExpiry || '2027-03-08'}</span>
+                  </div>
                 </div>
-                <div className="car-sub-item">
-                  <span className="car-sub-label">到期时间</span>
-                  <span className="car-sub-value">{userInfo.subscriptionExpiry || '2027-03-08'}</span>
-                </div>
+
                 <button className="car-action-btn primary" onClick={onRenew}>
                   <span className="car-btn-icon">💳</span>
                   <span className="car-btn-text">续费套餐</span>
                 </button>
-              </div>
-            </div>
 
-            {/* AI模型选择 */}
-            <div className="car-section">
-              <h3 className="car-section-title">AI 模型</h3>
-              <div className="car-model-grid">
-                {models.map((model) => (
-                  <button key={model} className={`car-model-card ${selectedModel === model ? 'active' : ''}`} onClick={() => handleModelChange(model)}>
-                    <span className="car-model-name">{model}</span>
-                    {selectedModel === model && <span className="car-model-check">✓</span>}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 消费记录 */}
-            <div className="car-section">
-              <h3 className="car-section-title">消费记录</h3>
-              <div className="car-usage-list">
-                {usageRecords.map((record) => (
-                  <div key={record.id} className="car-usage-item">
-                    <div className="car-usage-left">
-                      <span className="car-usage-type">{record.type}</span>
-                      <span className="car-usage-model">{record.model}</span>
-                    </div>
-                    <div className="car-usage-right">
-                      <span className="car-usage-tokens">{record.tokens}T</span>
-                      <span className="car-usage-cost">-¥{record.cost.toFixed(2)}</span>
-                    </div>
+                <div className="car-model-section">
+                  <h3 className="car-section-title">AI 模型</h3>
+                  <div className="car-model-list">
+                    {models.map((model) => (
+                      <button key={model} className={`car-model-btn ${selectedModel === model ? 'active' : ''}`} onClick={() => handleModelChange(model)}>
+                        <span className="car-model-name">{model}</span>
+                        {selectedModel === model && <span className="car-model-check">✓</span>}
+                      </button>
+                    ))}
                   </div>
-                ))}
+                </div>
+              </div>
+
+              {/* 右侧：消费记录 */}
+              <div className="car-right-panel">
+                <h3 className="car-section-title">消费记录</h3>
+                <div className="car-usage-list">
+                  {usageRecords.map((record) => (
+                    <div key={record.id} className="car-usage-item">
+                      <div className="car-usage-left">
+                        <span className="car-usage-type">{record.type}</span>
+                        <span className="car-usage-model">{record.model}</span>
+                      </div>
+                      <div className="car-usage-right">
+                        <span className="car-usage-tokens">{record.tokens}T</span>
+                        <span className="car-usage-cost">-¥{record.cost.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </>
