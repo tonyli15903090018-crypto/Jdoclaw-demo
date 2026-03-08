@@ -23,6 +23,32 @@
   gap: 12px;
 }
 
+.model-selector {
+  position: relative;
+}
+
+.model-select {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  outline: none;
+}
+
+.model-select:hover {
+  border-color: var(--primary-red);
+}
+
+.model-select:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px var(--primary-red-light);
+}
+
 .app-title {
   font-size: 20px;
   font-weight: 700;

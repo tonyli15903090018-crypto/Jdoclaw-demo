@@ -21,12 +21,17 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
 
         <div className="differentiator">
           <div className="diff-badge">🚀 核心优势</div>
-          <h2 className="diff-title">无需配置，一键使用</h2>
+          <h2 className="diff-title">买服务，不买 API</h2>
           <p className="diff-desc">
-            告别繁琐配置！无需购买 API、无需对接飞书/QQ、无需技术知识。
+            <strong>¥99 购买的是沙箱一键配置服务</strong>，让您告别繁琐的 API 对接！
             <br />
-            <strong>付款 → 充值 → 立即使用</strong>，3 步到位，专属 AI 助手即刻上线！
+            后续 AI 调用费用独立计费，清晰透明，您可以：
           </p>
+          <ul className="benefit-list">
+            <li>✅ 查看详细账单明细</li>
+            <li>✅ 自由切换 AI 模型</li>
+            <li>✅ 按实际用量付费</li>
+          </ul>
           <div className="comparison">
             <div className="comparison-item other">
               <span className="comparison-label">❌ 其他产品</span>
@@ -34,7 +39,7 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
             </div>
             <div className="comparison-item ours">
               <span className="comparison-label">✅ Jdoclaw</span>
-              <span className="comparison-text">购买 → 充值 → 使用，全程 3 分钟</span>
+              <span className="comparison-text">购买服务 → 充值 → 使用，全程 3 分钟</span>
             </div>
           </div>
         </div>

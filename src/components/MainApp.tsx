@@ -29,7 +29,10 @@ const MainApp = ({
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [currentModel, setCurrentModel] = useState('GPT-4')
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const models = ['GPT-4', 'GPT-3.5', 'Claude-3', 'Gemini-Pro']
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -107,6 +110,17 @@ const MainApp = ({
         </div>
 
         <div className="header-right">
+          <div className="model-selector">
+            <select
+              className="model-select"
+              value={currentModel}
+              onChange={(e) => setCurrentModel(e.target.value)}
+            >
+              {models.map(model => (
+                <option key={model} value={model}>{model}</option>
+              ))}
+            </select>
+          </div>
           <span className="user-name">{userInfo.username}</span>
           <span className="user-balance">¥{userInfo.apiBalance}</span>
           <button className="icon-btn" onClick={toggleDarkMode}>

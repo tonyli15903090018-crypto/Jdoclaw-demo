@@ -9,13 +9,13 @@ interface LoginProps {
 
 const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
   const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('demo@jdoclaw.ai')
-  const [password, setPassword] = useState('demo1234')
+  const [phone, setPhone] = useState('138****8888')
+  const [code, setCode] = useState('123456')
   const [username, setUsername] = useState('演示用户')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onLogin(username || '演示用户', email || 'demo@jdoclaw.ai')
+    onLogin(username || '演示用户', phone || '138****8888')
   }
 
   return (
@@ -60,21 +60,21 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
 
           <div className="form-group">
             <input
-              type="email"
+              type="tel"
               className="input"
-              placeholder="邮箱"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="手机号"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </div>
 
           <div className="form-group">
             <input
-              type="password"
+              type="text"
               className="input"
-              placeholder="密码"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="验证码"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
             />
           </div>
 
