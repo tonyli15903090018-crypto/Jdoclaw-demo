@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import type { DeviceType } from '../types'
 import './CreateBot.css'
 
 interface CreateBotProps {
+  deviceType: DeviceType
   onComplete: (botName: string, botAvatar: string) => void
   isDarkMode: boolean
   toggleDarkMode: () => void
 }
 
-const CreateBot = ({ onComplete, isDarkMode, toggleDarkMode }: CreateBotProps) => {
+const CreateBot = ({ onComplete, isDarkMode, toggleDarkMode, deviceType }: CreateBotProps) => {
   const [botName, setBotName] = useState('小智')
   const [selectedAvatar, setSelectedAvatar] = useState('🤖')
 
@@ -19,7 +21,7 @@ const CreateBot = ({ onComplete, isDarkMode, toggleDarkMode }: CreateBotProps) =
   }
 
   return (
-    <div className="create-bot-container">
+    <div className={`create-bot-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

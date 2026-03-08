@@ -1,19 +1,21 @@
 import { useState } from 'react'
+import type { DeviceType } from '../types'
 import './Recharge.css'
 
 interface RechargeProps {
+  deviceType: DeviceType
   onRecharge: (amount: number) => void
   isDarkMode: boolean
   toggleDarkMode: () => void
 }
 
-const Recharge = ({ onRecharge, isDarkMode, toggleDarkMode }: RechargeProps) => {
+const Recharge = ({ onRecharge, isDarkMode, toggleDarkMode, deviceType }: RechargeProps) => {
   const [selectedAmount, setSelectedAmount] = useState(100)
 
   const amounts = [50, 100, 200, 500]
 
   return (
-    <div className="recharge-container">
+    <div className={`recharge-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

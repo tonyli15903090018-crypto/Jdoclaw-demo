@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import type { DeviceType } from '../types'
 import './Purchase.css'
 
 interface PurchaseProps {
+  deviceType: DeviceType
   onPurchase: () => void
   isDarkMode: boolean
   toggleDarkMode: () => void
@@ -9,7 +11,7 @@ interface PurchaseProps {
 
 type PlanType = 'monthly' | 'quarterly' | 'yearly'
 
-const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => {
+const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode, deviceType }: PurchaseProps) => {
   const [selectedPlan, setSelectedPlan] = useState<PlanType>('yearly')
   const [autoRenew, setAutoRenew] = useState(true)
 
@@ -21,7 +23,7 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
 
   const currentPlan = plans.find(p => p.type === selectedPlan)!
   return (
-    <div className="purchase-container">
+    <div className={`purchase-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

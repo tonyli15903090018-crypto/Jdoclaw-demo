@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import type { DeviceType } from '../types'
 import './Login.css'
 
 interface LoginProps {
+  deviceType: DeviceType
   onLogin: (username: string, email: string) => void
   isDarkMode: boolean
   toggleDarkMode: () => void
 }
 
-const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
+const Login = ({ onLogin, isDarkMode, toggleDarkMode, deviceType }: LoginProps) => {
   const [isLogin, setIsLogin] = useState(true)
   const [phone, setPhone] = useState('138****8888')
   const [code, setCode] = useState('123456')
@@ -19,7 +21,7 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
   }
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

@@ -130,16 +130,16 @@ function App() {
       <DeviceSwitcher deviceType={deviceType} onDeviceChange={setDeviceType} />
       
       {stage === 'login' && (
-        <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+        <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
       )}
       {stage === 'purchase' && (
-        <Purchase onPurchase={handlePurchase} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+        <Purchase onPurchase={handlePurchase} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
       )}
       {stage === 'recharge' && (
-        <Recharge onRecharge={handleRecharge} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+        <Recharge onRecharge={handleRecharge} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
       )}
       {stage === 'createBot' && (
-        <CreateBot onComplete={handleCreateBot} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+        <CreateBot onComplete={handleCreateBot} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
       )}
       {stage === 'main' && (
         <MainApp

@@ -51,22 +51,17 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>
-      
 
       <div className="profile-card">
         {deviceType === 'car' ? (
-          /* 车机端专用布局 */
+          /* 车机端：横向2列布局 */
           <>
-            <div className="profile-header car-header">
-              <button className="back-btn car-back-btn" onClick={onBack}>
-                ← 返回
-              </button>
-              <h1 className="profile-title car-title">个人中心</h1>
+            <div className="car-header">
+              <button className="car-back-btn" onClick={onBack}>← 返回</button>
+              <h1 className="car-title">个人中心</h1>
             </div>
 
-            {/* 大卡片区域 - 横向2列 */}
             <div className="car-grid">
-              {/* 左侧：用户信息+余额 */}
               <div className="car-left-panel">
                 <div className="car-user-card">
                   <div className="car-avatar">{userInfo.botAvatar || '👤'}</div>
@@ -90,7 +85,6 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                 </div>
               </div>
 
-              {/* 右侧：快速操作 */}
               <div className="car-right-panel">
                 <h3 className="car-panel-title">快速操作</h3>
                 
@@ -106,11 +100,7 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                   </div>
                   <div className="car-model-quick">
                     {models.filter(m => m !== selectedModel).map((model) => (
-                      <button
-                        key={model}
-                        className="car-model-btn"
-                        onClick={() => handleModelChange(model)}
-                      >
+                      <button key={model} className="car-model-btn" onClick={() => handleModelChange(model)}>
                         {model}
                       </button>
                     ))}
@@ -120,12 +110,11 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
             </div>
           </>
         ) : deviceType === 'desktop' ? (
+          /* 电脑端：左右两栏 */
           <>
             <div className="profile-sidebar">
               <div className="profile-header">
-                <button className="back-btn" onClick={onBack}>
-                  ← 返回
-                </button>
+                <button className="back-btn" onClick={onBack}>← 返回</button>
               </div>
 
               <div className="user-info-section">
@@ -156,9 +145,7 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                     <span className="item-label">到期时间</span>
                     <span className="item-value">{userInfo.subscriptionExpiry || '2027-03-08'}</span>
                   </div>
-                  <button className="btn btn-primary renew-btn" onClick={onRenew}>
-                    续费套餐
-                  </button>
+                  <button className="btn btn-primary renew-btn" onClick={onRenew}>续费套餐</button>
                 </div>
               </div>
 
@@ -166,11 +153,7 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                 <h3 className="section-title">AI 模型</h3>
                 <div className="model-grid">
                   {models.map((model) => (
-                    <button
-                      key={model}
-                      className={`model-card ${selectedModel === model ? 'active' : ''}`}
-                      onClick={() => handleModelChange(model)}
-                    >
+                    <button key={model} className={`model-card ${selectedModel === model ? 'active' : ''}`} onClick={() => handleModelChange(model)}>
                       <span className="model-name">{model}</span>
                       {selectedModel === model && <span className="model-check">✓</span>}
                     </button>
@@ -199,31 +182,20 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
             </div>
           </>
         ) : (
+          /* 手机端：单列垂直 */
           <>
             <div className="profile-header">
-              <button className="back-btn" onClick={onBack}>
-                ← 返回
-              </button>
+              <button className="back-btn" onClick={onBack}>← 返回</button>
               <h1 className="profile-title">个人中心</h1>
               <div style={{ width: '48px' }}></div>
             </div>
 
-            <div className="profile-header">
-              <button className="back-btn" onClick={onBack}>
-                ← 返回
-              </button>
-              <h1 className="profile-title">个人中心</h1>
-              <div style={{ width: '48px' }}></div>
-            </div>
-
-            {/* 用户信息 */}
             <div className="user-info-section">
               <div className="user-avatar-large">{userInfo.botAvatar || '👤'}</div>
               <h2 className="user-name-large">{userInfo.username}</h2>
               <p className="user-phone">{userInfo.email}</p>
             </div>
 
-            {/* 账户余额 */}
             <div className="balance-section">
               <div className="balance-card">
                 <span className="balance-label">API 余额</span>
@@ -231,7 +203,6 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
               </div>
             </div>
 
-            {/* 订阅信息 */}
             <div className="subscription-section">
               <h3 className="section-title">订阅信息</h3>
               <div className="subscription-card">
@@ -243,22 +214,15 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                   <span className="item-label">到期时间</span>
                   <span className="item-value">{userInfo.subscriptionExpiry || '2027-03-08'}</span>
                 </div>
-                <button className="btn btn-primary renew-btn" onClick={onRenew}>
-                  续费套餐
-                </button>
+                <button className="btn btn-primary renew-btn" onClick={onRenew}>续费套餐</button>
               </div>
             </div>
 
-            {/* 模型选择 */}
             <div className="model-section">
               <h3 className="section-title">AI 模型</h3>
               <div className="model-grid">
                 {models.map((model) => (
-                  <button
-                    key={model}
-                    className={`model-card ${selectedModel === model ? 'active' : ''}`}
-                    onClick={() => handleModelChange(model)}
-                  >
+                  <button key={model} className={`model-card ${selectedModel === model ? 'active' : ''}`} onClick={() => handleModelChange(model)}>
                     <span className="model-name">{model}</span>
                     {selectedModel === model && <span className="model-check">✓</span>}
                   </button>
@@ -266,7 +230,6 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
               </div>
             </div>
 
-            {/* 消费记录 */}
             <div className="usage-section">
               <h3 className="section-title">消费记录</h3>
               <div className="usage-list">
