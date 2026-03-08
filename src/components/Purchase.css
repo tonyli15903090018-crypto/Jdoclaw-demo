@@ -320,3 +320,62 @@
     padding: 12px 16px;
   }
 }
+
+/* 手机端适配 */
+.purchase-container.mobile {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.purchase-container.mobile .purchase-card {
+  max-width: 100%;
+  padding: 32px 24px;
+}
+
+.purchase-container.mobile .plan-selector {
+  grid-template-columns: 1fr;
+}
+
+.purchase-container.mobile .plan-option {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* 车机端适配 */
+.purchase-container.car .purchase-card {
+  max-width: 700px;
+  padding: 56px 48px;
+}
+
+.purchase-container.car .purchase-title {
+  font-size: 32px;
+}
+
+.purchase-container.car .diff-title {
+  font-size: 26px;
+}
+
+.purchase-container.car .diff-desc {
+  font-size: 16px;
+}
+
+.purchase-container.car .plan-option {
+  padding: 20px 16px;
+}
+
+.purchase-container.car .plan-name {
+  font-size: 18px;
+}
+
+.purchase-container.car .plan-price {
+  font-size: 20px;
+}
+
+.purchase-container.car .price-amount {
+  font-size: 56px;
+}
+
+.purchase-container.car .purchase-btn {
+  padding: 20px;
+  font-size: 18px;
+}

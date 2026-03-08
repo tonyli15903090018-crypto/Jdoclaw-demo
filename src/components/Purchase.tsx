@@ -24,7 +24,7 @@ const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode }: PurchaseProps) => 
 
   const currentPlan = plans.find(p => p.type === selectedPlan)!
   return (
-    <div className="purchase-container">
+    <div className={`purchase-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

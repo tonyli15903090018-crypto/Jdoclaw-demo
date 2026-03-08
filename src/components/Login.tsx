@@ -22,7 +22,7 @@ const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
   }
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

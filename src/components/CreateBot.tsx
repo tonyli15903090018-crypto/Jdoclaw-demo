@@ -22,7 +22,7 @@ const CreateBot = ({ onComplete, isDarkMode, toggleDarkMode }: CreateBotProps) =
   }
 
   return (
-    <div className="create-bot-container">
+    <div className={`create-bot-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

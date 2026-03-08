@@ -16,7 +16,7 @@ const Recharge = ({ onRecharge, isDarkMode, toggleDarkMode }: RechargeProps) => 
   const amounts = [50, 100, 200, 500]
 
   return (
-    <div className="recharge-container">
+    <div className={`recharge-container ${deviceType}`}>
       <button className="theme-toggle" onClick={toggleDarkMode}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>

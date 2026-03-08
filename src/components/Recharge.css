@@ -162,3 +162,45 @@
     font-size: 20px;
   }
 }
+
+/* 手机端适配 */
+.recharge-container.mobile {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.recharge-container.mobile .recharge-card {
+  max-width: 100%;
+  padding: 32px 24px;
+}
+
+.recharge-container.mobile .amount-options {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 车机端适配 */
+.recharge-container.car .recharge-card {
+  max-width: 600px;
+  padding: 56px 48px;
+}
+
+.recharge-container.car .recharge-title {
+  font-size: 32px;
+}
+
+.recharge-container.car .balance-amount {
+  font-size: 40px;
+}
+
+.recharge-container.car .amount-btn {
+  padding: 24px;
+}
+
+.recharge-container.car .amount-value {
+  font-size: 28px;
+}
+
+.recharge-container.car .recharge-btn {
+  padding: 20px;
+  font-size: 18px;
+}
