@@ -9,13 +9,20 @@ interface LoginProps {
 
 const Login = ({ onLogin, isDarkMode, toggleDarkMode }: LoginProps) => {
   const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('demo@homeassistant.ai')
+  const [password, setPassword] = useState('demo1234')
+  const [username, setUsername] = useState('演示用户')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // 直接登录，无需验证
+    // 保存用户信息到 localStorage
+    const userInfo = {
+      username: username || '演示用户',
+      email: email || 'demo@homeassistant.ai'
+    }
+    localStorage.setItem('user_info', JSON.stringify(userInfo))
+    
+    // 直接登录
     const mockToken = `demo_token_${Date.now()}`
     onLogin(mockToken)
   }

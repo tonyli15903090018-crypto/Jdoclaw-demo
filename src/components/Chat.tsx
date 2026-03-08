@@ -25,7 +25,21 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode }: ChatProps) => {
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [userName, setUserName] = useState('演示用户')
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // 从 localStorage 读取用户信息
+    const userInfoStr = localStorage.getItem('user_info')
+    if (userInfoStr) {
+      try {
+        const userInfo = JSON.parse(userInfoStr)
+        setUserName(userInfo.username || '演示用户')
+      } catch (e) {
+        console.error('Failed to parse user info:', e)
+      }
+    }
+  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -85,6 +99,7 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode }: ChatProps) => {
         </div>
         
         <div className="header-right">
+          <span className="user-name">{userName}</span>
           <button className="icon-btn" onClick={toggleDarkMode} title="切换主题">
             {isDarkMode ? '☀️' : '🌙'}
           </button>
