@@ -1,37 +1,78 @@
 import { useState, useEffect } from 'react'
 import Login from './components/Login'
-import Chat from './components/Chat'
+import Purchase from './components/Purchase'
+import Recharge from './components/Recharge'
+import MainApp from './components/MainApp'
+import type { UserInfo, DeviceType } from './types'
 import './App.css'
 
+type AppStage = 'login' | 'purchase' | 'recharge' | 'main'
+
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [stage, setStage] = useState<AppStage>('login')
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop')
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    username: '演示用户',
+    email: 'demo@jdoclaw.ai',
+    hasPurchased: false,
+    apiBalance: 0
+  })
 
   useEffect(() => {
-    // 检查本地存储的认证状态
-    const token = localStorage.getItem('auth_token')
-    if (token) {
-      setIsAuthenticated(true)
-    }
-
-    // 检查暗黑模式偏好
+    // 检查本地存储
+    const savedStage = localStorage.getItem('app_stage')
+    const savedUserInfo = localStorage.getItem('user_info')
     const darkMode = localStorage.getItem('dark_mode') === 'true'
+    
+    if (savedStage) setStage(savedStage as AppStage)
+    if (savedUserInfo) {
+      try {
+        setUserInfo(JSON.parse(savedUserInfo))
+      } catch (e) {
+        console.error('Failed to parse user info:', e)
+      }
+    }
     setIsDarkMode(darkMode)
   }, [])
 
   useEffect(() => {
-    // 更新 body 类名以应用暗黑模式
     document.body.className = isDarkMode ? 'dark' : ''
   }, [isDarkMode])
 
-  const handleLogin = (token: string) => {
-    localStorage.setItem('auth_token', token)
-    setIsAuthenticated(true)
+  const handleLogin = (username: string, email: string) => {
+    const newUserInfo = { ...userInfo, username, email }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+    setStage('purchase')
+    localStorage.setItem('app_stage', 'purchase')
+  }
+
+  const handlePurchase = () => {
+    const newUserInfo = { ...userInfo, hasPurchased: true }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+    setStage('recharge')
+    localStorage.setItem('app_stage', 'recharge')
+  }
+
+  const handleRecharge = (amount: number) => {
+    const newUserInfo = { ...userInfo, apiBalance: userInfo.apiBalance + amount }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+    setStage('main')
+    localStorage.setItem('app_stage', 'main')
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('auth_token')
-    setIsAuthenticated(false)
+    localStorage.clear()
+    setStage('login')
+    setUserInfo({
+      username: '演示用户',
+      email: 'demo@jdoclaw.ai',
+      hasPurchased: false,
+      apiBalance: 0
+    })
   }
 
   const toggleDarkMode = () => {
@@ -42,10 +83,24 @@ function App() {
 
   return (
     <div className="app">
-      {!isAuthenticated ? (
+      {stage === 'login' && (
         <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      ) : (
-        <Chat onLogout={handleLogout} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      )}
+      {stage === 'purchase' && (
+        <Purchase onPurchase={handlePurchase} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      )}
+      {stage === 'recharge' && (
+        <Recharge onRecharge={handleRecharge} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      )}
+      {stage === 'main' && (
+        <MainApp
+          userInfo={userInfo}
+          deviceType={deviceType}
+          onDeviceChange={setDeviceType}
+          onLogout={handleLogout}
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
       )}
     </div>
   )

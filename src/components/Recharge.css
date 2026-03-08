@@ -1,0 +1,164 @@
+.recharge-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px;
+  position: relative;
+}
+
+.recharge-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-primary);
+  border-radius: 24px;
+  padding: 48px 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.recharge-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.recharge-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.recharge-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.balance-display {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.balance-label {
+  display: block;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.balance-amount {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-red);
+}
+
+.amount-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.amount-btn {
+  position: relative;
+  padding: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.amount-btn:hover {
+  border-color: var(--primary-red);
+  transform: translateY(-2px);
+}
+
+.amount-btn.active {
+  border-color: var(--primary-red);
+  background: var(--primary-red-light);
+}
+
+.amount-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.amount-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--primary-red);
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.recharge-info {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.info-label {
+  color: var(--text-secondary);
+}
+
+.info-value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.recharge-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+}
+
+.recharge-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+  .recharge-card {
+    padding: 32px 24px;
+  }
+  
+  .amount-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .amount-btn {
+    padding: 16px;
+  }
+  
+  .amount-value {
+    font-size: 20px;
+  }
+}
