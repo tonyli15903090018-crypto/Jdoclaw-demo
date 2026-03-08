@@ -4,8 +4,31 @@
   padding: 24px;
 }
 
-.profile-card {
+.profile-container.desktop .profile-card {
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+}
+
+.profile-container.desktop .profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-container.desktop .profile-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-container.mobile .profile-card,
+.profile-container.car .profile-card {
   max-width: 800px;
+}
+
+.profile-card {
   margin: 0 auto;
 }
 
@@ -154,6 +177,20 @@
   gap: 12px;
 }
 
+.profile-container.desktop .model-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.profile-container.car .model-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.profile-container.car .model-card {
+  padding: 32px;
+  font-size: 20px;
+}
+
 .model-card {
   position: relative;
   padding: 20px;
@@ -246,6 +283,10 @@
 }
 
 @media (max-width: 768px) {
+  .profile-container.desktop .profile-card {
+    grid-template-columns: 1fr;
+  }
+  
   .model-grid {
     grid-template-columns: 1fr;
   }
@@ -262,4 +303,49 @@
     justify-content: space-between;
     align-items: center;
   }
+}
+
+.profile-container.car {
+  padding: 32px;
+}
+
+.profile-container.car .profile-header {
+  margin-bottom: 40px;
+}
+
+.profile-container.car .back-btn {
+  padding: 16px 24px;
+  font-size: 18px;
+}
+
+.profile-container.car .profile-title {
+  font-size: 32px;
+}
+
+.profile-container.car .user-avatar-large {
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+}
+
+.profile-container.car .user-name-large {
+  font-size: 28px;
+}
+
+.profile-container.car .balance-value {
+  font-size: 48px;
+}
+
+.profile-container.car .section-title {
+  font-size: 20px;
+}
+
+.profile-container.car .subscription-item {
+  padding: 16px 0;
+  font-size: 18px;
+}
+
+.profile-container.car .renew-btn {
+  padding: 20px;
+  font-size: 18px;
 }
