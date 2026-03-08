@@ -10,12 +10,95 @@
 
 .purchase-card {
   width: 100%;
-  max-width: 520px;
+  max-width: 620px;
   background: var(--bg-primary);
   border-radius: 24px;
   padding: 48px 40px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: fadeInUp 0.6s ease-out;
+}
+
+.differentiator {
+  background: linear-gradient(135deg, rgba(255, 59, 59, 0.1) 0%, rgba(230, 46, 46, 0.05) 100%);
+  border: 2px solid var(--primary-red);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.diff-badge {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  background: var(--primary-red);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.diff-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-red);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.diff-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.diff-desc strong {
+  color: var(--primary-red);
+  font-weight: 700;
+}
+
+.comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comparison-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.comparison-item.other {
+  opacity: 0.7;
+}
+
+.comparison-item.ours {
+  background: var(--primary-red-light);
+  border-color: var(--primary-red);
+}
+
+.comparison-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.comparison-item.ours .comparison-label {
+  color: var(--primary-red);
+}
+
+.comparison-text {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .purchase-header {
