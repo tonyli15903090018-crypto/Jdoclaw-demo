@@ -1,19 +1,32 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import Login from './components/Login'
 import CreateBot from './components/CreateBot'
 import MainApp from './components/MainApp'
 import DeviceSwitcher from './components/DeviceSwitcher'
-// @ts-ignore
-import iPhone17Container from './components/iPhone17Container'
 import type { UserInfo, DeviceType } from './types'
 import './App.css'
+import './components/iPhone17Container.css'
 
 type AppStage = 'login' | 'createBot' | 'main'
+
+// iPhone17 容器组件（内联）
+const iPhone17Container = ({ children, isDarkMode = false }: { children: ReactNode; isDarkMode?: boolean }) => {
+  return (
+    <div className="iphone17-wrapper">
+      <div className={`iphone17-container ${isDarkMode ? 'dark' : 'light'}`}>
+        <div className="iphone17-notch" />
+        <div className="iphone17-screen">
+          {children}
+        </div>
+        <div className="iphone17-indicator" />
+      </div>
+    </div>
+  )
+}
 
 function App() {
   const [stage, setStage] = useState<AppStage>('login')
   const [isDarkMode, setIsDarkMode] = useState(false)
-  // 强制设置为 mobile，确保显示 iPhone 容器
   const [deviceType, setDeviceType] = useState<DeviceType>('mobile')
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: '演示用户',
@@ -23,10 +36,9 @@ function App() {
   })
 
   useEffect(() => {
-    // Demo 模式：刷新后清除状态，但保持 mobile 设备类型
     localStorage.clear()
     setStage('login')
-    setDeviceType('mobile') // 确保是 mobile
+    setDeviceType('mobile')
   }, [])
 
   useEffect(() => {
@@ -34,7 +46,6 @@ function App() {
   }, [isDarkMode])
 
   useEffect(() => {
-    // 调试：在控制台打印 deviceType
     console.log('Current deviceType:', deviceType)
   }, [deviceType])
 
@@ -139,19 +150,18 @@ function App() {
 
   return (
     <div className={`app-container ${isDarkMode ? 'dark' : 'light'}`}>
-      {/* 设备切换器 - 固定在底部 */}
       <DeviceSwitcher deviceType={deviceType} onDeviceChange={handleDeviceChange} />
       
-      {/* 根据设备类型决定是否使用 iPhone 容器 */}
-      {deviceType === 'mobile' ? (
-        <iPhone17Container isDarkMode={isDarkMode}>
-          {renderContent()}
-        </iPhone17Container>
-      ) : (
-        <div className="desktop-content">
-          {renderContent()}
+      {/* iPhone 17 容器 - 直接内联HTML */}
+      <div className="iphone17-wrapper">
+        <div className={`iphone17-container ${isDarkMode ? 'dark' : 'light'}`}>
+          <div className="iphone17-notch" />
+          <div className="iphone17-screen">
+            {renderContent()}
+          </div>
+          <div className="iphone17-indicator" />
         </div>
-      )}
+      </div>
     </div>
   )
 }
