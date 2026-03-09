@@ -1,0 +1,145 @@
+.sticky-note {
+  position: fixed;
+  width: 240px;
+  min-height: 150px;
+  padding: 20px;
+  background: #ffd700;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 5px 5px;
+  transform: rotate(-2deg);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: move;
+  z-index: 1000;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+
+.sticky-note:hover {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.sticky-note.dragging {
+  transform: rotate(5deg) scale(1.05);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+  cursor: grabbing;
+}
+
+.sticky-note.yellow {
+  background: linear-gradient(135deg, #fff9c4 0%, #ffd700 100%);
+}
+
+.sticky-note.pink {
+  background: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);
+}
+
+.sticky-note.blue {
+  background: linear-gradient(135deg, #e1f5fe 0%, #81d4fa 100%);
+}
+
+.sticky-note.green {
+  background: linear-gradient(135deg, #f1f8e9 0%, #aed581 100%);
+}
+
+.sticky-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.2);
+  cursor: grab;
+}
+
+.sticky-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.sticky-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  line-height: 20px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.sticky-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #e74c3c;
+  transform: rotate(90deg);
+}
+
+.sticky-content {
+  margin-bottom: 15px;
+}
+
+.sticky-content p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  word-wrap: break-word;
+}
+
+.sticky-pin {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  font-size: 32px;
+  transform: rotate(45deg);
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+  animation: swing 3s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(45deg);
+  }
+  50% {
+    transform: rotate(35deg);
+  }
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 100%);
+  border-radius: 0 0 5px 5px;
+  pointer-events: none;
+}
+
+/* Dark mode support */
+body.dark .sticky-note {
+  filter: brightness(0.9);
+}
+
+body.dark .sticky-content p,
+body.dark .sticky-header h4 {
+  color: #2c3e50;
+}
