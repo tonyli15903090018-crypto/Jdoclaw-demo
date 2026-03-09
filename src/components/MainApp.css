@@ -469,3 +469,17 @@
   border-color: var(--primary-red);
   background: var(--primary-red-light);
 }
+
+/* Sidebar + Content 布局 */
+.main-app {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  overflow: auto;
+  background: var(--bg-primary);
+}
+
