@@ -1,3 +1,17 @@
+/* 新的主容器布局：左侧边栏 + 右侧内容 */
+.main-app-wrapper {
+  display: flex;
+  height: 100vh;
+  background: var(--bg-primary);
+  transition: all 0.3s ease;
+}
+
+.main-app-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 原有的 main-app 样式保留给 Chat 组件 */
 .main-app {
   display: flex;
   flex-direction: column;
