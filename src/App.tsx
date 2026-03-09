@@ -24,7 +24,16 @@ function App() {
   })
 
   useEffect(() => {
-    // 检查本地存储
+    // Demo 模式：刷新后清除所有状态，回到登录页
+    const isDemoMode = true // 设为 false 可保留状态
+    
+    if (isDemoMode) {
+      localStorage.clear()
+      setStage('login')
+      return
+    }
+    
+    // 正常模式：检查本地存储
     const savedStage = localStorage.getItem('app_stage')
     const savedUserInfo = localStorage.getItem('user_info')
     const darkMode = localStorage.getItem('dark_mode') === 'true'
