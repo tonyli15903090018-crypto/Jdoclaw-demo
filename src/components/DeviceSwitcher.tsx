@@ -10,11 +10,11 @@ const DeviceSwitcher = ({ deviceType, onDeviceChange }: DeviceSwitcherProps) => 
   return (
     <div className="device-switcher-fixed">
       <button
-        className={`device-btn ${deviceType === 'desktop' ? 'active' : ''}`}
-        onClick={() => onDeviceChange('desktop')}
-        title="电脑端"
+        className={`device-btn ${deviceType === 'car' ? 'active' : ''}`}
+        onClick={() => onDeviceChange('car')}
+        title="车机端"
       >
-        💻
+        🚗
       </button>
       <button
         className={`device-btn ${deviceType === 'mobile' ? 'active' : ''}`}
@@ -22,13 +22,6 @@ const DeviceSwitcher = ({ deviceType, onDeviceChange }: DeviceSwitcherProps) => 
         title="手机端"
       >
         📱
-      </button>
-      <button
-        className={`device-btn ${deviceType === 'car' ? 'active' : ''}`}
-        onClick={() => onDeviceChange('car')}
-        title="车机端"
-      >
-        🚗
       </button>
     </div>
   )
