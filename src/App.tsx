@@ -87,10 +87,6 @@ function App() {
     localStorage.setItem('app_stage', 'main')
   }
 
-  const handleOpenProfile = () => {
-    setStage('profile')
-    localStorage.setItem('app_stage', 'profile')
-  }
 
   const handleCloseProfile = () => {
     setStage('main')
@@ -145,9 +141,7 @@ function App() {
         <MainApp
           userInfo={userInfo}
           deviceType={deviceType}
-          onDeviceChange={setDeviceType}
           onLogout={handleLogout}
-          onOpenProfile={handleOpenProfile}
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
         />

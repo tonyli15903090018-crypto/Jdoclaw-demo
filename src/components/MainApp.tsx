@@ -1,72 +1,52 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Chat from './Chat'
 import Roadbook from './Roadbook'
 import Tasks from './Tasks'
 import Profile from './Profile'
 import BotDeploy from './BotDeploy'
-import Sidebar from './Sidebar'
+import Sidebar, { type SidebarTab } from './Sidebar'
 import PaymentModal from './PaymentModal'
-import type { UserInfo, DeviceType, Message } from '../types'
+import type { UserInfo, DeviceType } from '../types'
 import './MainApp.css'
 
 interface MainAppProps {
   userInfo: UserInfo
   deviceType: DeviceType
-  onDeviceChange: (device: DeviceType) => void
   onLogout: () => void
-  onOpenProfile: () => void
   isDarkMode: boolean
   toggleDarkMode: () => void
 }
 
-type ActiveTab = 'chat' | 'roadbook' | 'tasks' | 'profile' | 'botdeploy'
-
 const MainApp = ({ 
   userInfo, 
   deviceType, 
-  onDeviceChange, 
-  onLogout, 
-  onOpenProfile,
+  onLogout,
   isDarkMode, 
   toggleDarkMode 
 }: MainAppProps) => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('chat')
+  const [activeTab, setActiveTab] = useState<SidebarTab>('chat')
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const [hasCheckedPayment, setHasCheckedPayment] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: `你好${userInfo.username}！我是${userInfo.botName || 'Jdoclaw AI'} 助手，有什么可以帮助你的吗？`,
-      sender: 'ai',
-      timestamp: new Date()
-    }
-  ])
 
-  // 首次对话时检查支付状态
+  // 首次进入时检查支付状态
   useEffect(() => {
-    if (!hasCheckedPayment && messages.length > 1) {
-      // 检查是否购买沙箱和充值
+    if (!hasCheckedPayment) {
       if (!userInfo.hasPurchased || userInfo.apiBalance === 0) {
         setShowPaymentModal(true)
       }
       setHasCheckedPayment(true)
     }
-  }, [messages, hasCheckedPayment, userInfo])
-
-  const handleSendMessage = (newMessages: Message[]) => {
-    setMessages(newMessages)
-  }
+  }, [hasCheckedPayment, userInfo])
 
   const renderContent = () => {
     switch (activeTab) {
       case 'chat':
         return (
           <Chat
-            messages={messages}
-            onSendMessage={handleSendMessage}
-            userInfo={userInfo}
-            deviceType={deviceType}
+            onLogout={onLogout}
             isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            deviceType={deviceType}
           />
         )
       case 'roadbook':
@@ -78,12 +58,14 @@ const MainApp = ({
           <Profile
             userInfo={userInfo}
             deviceType={deviceType}
-            onLogout={onLogout}
             isDarkMode={isDarkMode}
             toggleDarkMode={toggleDarkMode}
+            onBack={() => setActiveTab('chat')}
+            onRenew={() => setShowPaymentModal(true)}
+            onModelChange={() => {}}
           />
         )
-      case 'botdeploy':
+      case 'botDeploy':
         return <BotDeploy isDarkMode={isDarkMode} />
       default:
         return null
@@ -95,7 +77,6 @@ const MainApp = ({
       <Sidebar 
         activeTab={activeTab}
         onTabChange={setActiveTab}
-        isDarkMode={isDarkMode}
       />
       
       <div className="main-content">
@@ -104,9 +85,11 @@ const MainApp = ({
 
       {showPaymentModal && (
         <PaymentModal
-          userInfo={userInfo}
+          isOpen={showPaymentModal}
+          sandboxBalance={userInfo.hasPurchased ? 1 : 0}
+          apiBalance={userInfo.apiBalance}
           onClose={() => setShowPaymentModal(false)}
-          isDarkMode={isDarkMode}
+          onRecharge={() => {}}
         />
       )}
     </div>
