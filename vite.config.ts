@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './',  // 使用相对路径，支持双击打开
+  base: '/homeassistant-ai-chat/',  // GitHub Pages 路径
 })
