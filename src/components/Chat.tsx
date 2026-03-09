@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import type { DeviceType } from '../types'
 import './Chat.css'
 
 interface Message {
@@ -12,9 +13,10 @@ interface ChatProps {
   onLogout: () => void
   isDarkMode: boolean
   toggleDarkMode: () => void
+  deviceType?: DeviceType
 }
 
-const Chat = ({ onLogout, isDarkMode, toggleDarkMode }: ChatProps) => {
+const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile' }: ChatProps) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -26,6 +28,7 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode }: ChatProps) => {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [userName, setUserName] = useState('演示用户')
+  const [isVoiceCalling, setIsVoiceCalling] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -87,6 +90,10 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode }: ChatProps) => {
     return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
   }
 
+  const handleVoiceCall = () => {
+    setIsVoiceCalling(!isVoiceCalling)
+  }
+
   return (
     <div className="chat-container">
       {/* 顶部导航栏 */}
@@ -100,6 +107,15 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode }: ChatProps) => {
         
         <div className="header-right">
           <span className="user-name">{userName}</span>
+          {deviceType === 'car' && (
+            <button 
+              className={`icon-btn voice-call-btn ${isVoiceCalling ? 'calling' : ''}`}
+              onClick={handleVoiceCall} 
+              title={isVoiceCalling ? '结束通话' : '语音通话'}
+            >
+              {isVoiceCalling ? '📞' : '☎️'}
+            </button>
+          )}
           <button className="icon-btn" onClick={toggleDarkMode} title="切换主题">
             {isDarkMode ? '☀️' : '🌙'}
           </button>
