@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Chat from './Chat'
 import Roadbook from './Roadbook'
 import Tasks from './Tasks'
@@ -26,17 +26,25 @@ const MainApp = ({
 }: MainAppProps) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('chat')
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-  const [hasCheckedPayment, setHasCheckedPayment] = useState(false)
 
-  // 首次进入时检查支付状态
-  useEffect(() => {
-    if (!hasCheckedPayment) {
-      if (!userInfo.hasPurchased || userInfo.apiBalance === 0) {
-        setShowPaymentModal(true)
-      }
-      setHasCheckedPayment(true)
+  // Chat 组件会在发送消息时检查余额并触发此函数
+  const handleBalanceCheck = () => {
+    if (!userInfo.hasPurchased || userInfo.apiBalance <= 0) {
+      setShowPaymentModal(true)
     }
-  }, [hasCheckedPayment, userInfo])
+  }
+
+  const handleGoPurchase = () => {
+    // TODO: 跳转到购买页面（这里暂时只关闭弹窗）
+    setShowPaymentModal(false)
+    alert('请返回购买套餐页面')
+  }
+
+  const handleGoRecharge = () => {
+    // TODO: 跳转到充值页面（这里暂时只关闭弹窗）
+    setShowPaymentModal(false)
+    alert('请前往充值页面')
+  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -47,6 +55,7 @@ const MainApp = ({
             isDarkMode={isDarkMode}
             toggleDarkMode={toggleDarkMode}
             deviceType={deviceType}
+            onBalanceCheck={handleBalanceCheck}
           />
         )
       case 'roadbook':
@@ -61,7 +70,7 @@ const MainApp = ({
             isDarkMode={isDarkMode}
             toggleDarkMode={toggleDarkMode}
             onBack={() => setActiveTab('chat')}
-            onRenew={() => setShowPaymentModal(true)}
+            onRenew={handleGoRecharge}
             onModelChange={() => {}}
           />
         )
@@ -83,15 +92,16 @@ const MainApp = ({
         {renderContent()}
       </div>
 
-      {showPaymentModal && (
-        <PaymentModal
-          isOpen={showPaymentModal}
-          sandboxBalance={userInfo.hasPurchased ? 1 : 0}
-          apiBalance={userInfo.apiBalance}
-          onClose={() => setShowPaymentModal(false)}
-          onRecharge={() => {}}
-        />
-      )}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        hasPurchased={userInfo.hasPurchased}
+        apiBalance={userInfo.apiBalance}
+        packageType={userInfo.packageName || '未购买'}
+        packageExpiry={userInfo.subscriptionExpiry || ''}
+        onClose={() => setShowPaymentModal(false)}
+        onGoPurchase={handleGoPurchase}
+        onGoRecharge={handleGoRecharge}
+      />
     </div>
   )
 }

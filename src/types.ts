@@ -11,6 +11,7 @@ export interface UserInfo {
   botAvatar?: string
   subscriptionPlan?: 'monthly' | 'quarterly' | 'yearly'
   subscriptionExpiry?: string
+  packageName?: string
   selectedModel?: string
 }
 

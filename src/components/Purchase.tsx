@@ -7,10 +7,9 @@ interface PurchaseProps {
   onComplete: (packageType: PackageType) => void
   isDarkMode: boolean
   toggleDarkMode: () => void
-  deviceType: string
 }
 
-const Purchase = ({ onComplete, isDarkMode, toggleDarkMode, deviceType }: PurchaseProps) => {
+const Purchase = ({ onComplete, isDarkMode, toggleDarkMode }: PurchaseProps) => {
   const [selectedPackage, setSelectedPackage] = useState<PackageType>('quarterly')
   const [autoRenew, setAutoRenew] = useState(false)
 

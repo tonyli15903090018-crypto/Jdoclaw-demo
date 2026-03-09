@@ -14,9 +14,10 @@ interface ChatProps {
   isDarkMode: boolean
   toggleDarkMode: () => void
   deviceType?: DeviceType
+  onBalanceCheck?: () => void
 }
 
-const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile' }: ChatProps) => {
+const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onBalanceCheck }: ChatProps) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -54,6 +55,11 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile' }: C
 
   const handleSend = async () => {
     if (!input.trim()) return
+
+    // 发送消息前检查余额
+    if (onBalanceCheck) {
+      onBalanceCheck()
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
