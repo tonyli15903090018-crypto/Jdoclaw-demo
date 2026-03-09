@@ -1,0 +1,219 @@
+.roadbook-container {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.roadbook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.roadbook-header h1 {
+  font-size: 32px;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.create-roadbook-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.create-roadbook-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.roadbook-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.stat-icon {
+  font-size: 36px;
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.roadbook-list {
+  display: grid;
+  gap: 20px;
+}
+
+.roadbook-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.roadbook-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.roadbook-cover {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  flex-shrink: 0;
+}
+
+.roadbook-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.roadbook-content h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 22px;
+}
+
+.roadbook-meta {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.roadbook-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.highlight-tag {
+  padding: 5px 12px;
+  background: #ecf0f1;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #34495e;
+}
+
+.roadbook-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.created-date {
+  font-size: 13px;
+  color: #95a5a6;
+}
+
+.roadbook-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #2980b9;
+}
+
+body.dark .roadbook-container {
+  color: #ecf0f1;
+}
+
+body.dark .roadbook-header h1 {
+  color: #ecf0f1;
+}
+
+body.dark .roadbook-card {
+  background: #2d2d2d;
+}
+
+body.dark .roadbook-content h3 {
+  color: #ecf0f1;
+}
+
+body.dark .highlight-tag {
+  background: #1a1a1a;
+  color: #bdc3c7;
+}
+
+body.dark .roadbook-footer {
+  border-top-color: #444;
+}
+
+@media (max-width: 768px) {
+  .roadbook-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .roadbook-card {
+    flex-direction: column;
+  }
+
+  .roadbook-cover {
+    width: 100%;
+    height: 150px;
+  }
+
+  .roadbook-footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
