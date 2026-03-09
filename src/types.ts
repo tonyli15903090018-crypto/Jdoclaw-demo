@@ -5,8 +5,13 @@ export type DeviceType = 'desktop' | 'mobile' | 'car'
 export interface UserInfo {
   username: string
   email: string
-  hasPurchased: boolean
-  apiBalance: number
+  phone?: string
+  
+  // 三层支付状态
+  hasJoined: boolean        // 第一层：是否加入会员 (¥9.9)
+  hasPurchased: boolean     // 第二层：是否购买沙箱套餐
+  apiBalance: number        // 第三层：API 余额
+  
   botName?: string
   botAvatar?: string
   subscriptionPlan?: 'monthly' | 'quarterly' | 'yearly'
@@ -32,3 +37,20 @@ export interface UsageRecord {
   cost: number
   type: string
 }
+
+// 模型信息
+export interface ModelInfo {
+  id: string
+  name: string
+  provider: string
+  pricePerMToken: number  // 每百万 token 的价格（元）
+}
+
+// 可用模型列表
+export const AVAILABLE_MODELS: ModelInfo[] = [
+  { id: 'gpt-4', name: 'GPT-4', provider: 'OpenAI', pricePerMToken: 30 },
+  { id: 'gpt-3.5-turbo', name: 'GPT-3.5 Turbo', provider: 'OpenAI', pricePerMToken: 2 },
+  { id: 'claude-3', name: 'Claude 3', provider: 'Anthropic', pricePerMToken: 15 },
+  { id: 'gemini-pro', name: 'Gemini Pro', provider: 'Google', pricePerMToken: 0.5 },
+]
+

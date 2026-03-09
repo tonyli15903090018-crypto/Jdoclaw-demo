@@ -17,11 +17,13 @@ interface MainAppProps {
   onLogout: () => void
   isDarkMode: boolean
   toggleDarkMode: () => void
+  onJoinComplete: () => void
   onPurchaseComplete: (packageType: 'monthly' | 'quarterly' | 'yearly') => void
   onRechargeComplete: (amount: number) => void
 }
 
-type ViewMode = 'main' | 'purchase' | 'recharge'
+type ViewMode = 'main' | 'join' | 'purchase' | 'recharge'
+type ModalType = null | 'join' | 'purchase' | 'recharge'
 
 const MainApp = ({ 
   userInfo, 
@@ -29,17 +31,32 @@ const MainApp = ({
   onLogout,
   isDarkMode, 
   toggleDarkMode,
+  onJoinComplete,
   onPurchaseComplete,
   onRechargeComplete
 }: MainAppProps) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('chat')
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [modalType, setModalType] = useState<ModalType>(null)
   const [viewMode, setViewMode] = useState<ViewMode>('main')
 
-  // Chat 组件发送消息时检查余额
+  // 三层检查：发送消息时的检查逻辑
   const handleBalanceCheck = () => {
-    if (!userInfo.hasPurchased || userInfo.apiBalance <= 0) {
-      setShowPaymentModal(true)
+    // 第一层：检查是否加入会员
+    if (!userInfo.hasJoined) {
+      setModalType('join')
+      return
+    }
+    
+    // 第二层：检查是否购买沙箱
+    if (!userInfo.hasPurchased) {
+      setModalType('purchase')
+      return
+    }
+    
+    // 第三层：检查 API 余额
+    if (userInfo.apiBalance <= 0) {
+      setModalType('recharge')
+      return
     }
   }
 

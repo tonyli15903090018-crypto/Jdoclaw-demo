@@ -31,8 +31,9 @@ function App() {
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: '演示用户',
     email: 'demo@jdoclaw.ai',
-    hasPurchased: false,
-    apiBalance: 0
+    hasJoined: false,      // 第一层：未加入会员
+    hasPurchased: false,   // 第二层：未购买沙箱
+    apiBalance: 0          // 第三层：无余额
   })
 
   useEffect(() => {
@@ -69,6 +70,17 @@ function App() {
     localStorage.setItem('app_stage', 'main')
   }
 
+  // 第一层：加入会员 (¥9.9)
+  const handleJoinComplete = () => {
+    const newUserInfo = { 
+      ...userInfo, 
+      hasJoined: true
+    }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+  }
+
+  // 第二层：购买沙箱套餐
   const handlePurchaseComplete = (packageType: 'monthly' | 'quarterly' | 'yearly') => {
     const expiry = new Date()
     if (packageType === 'monthly') {
@@ -96,6 +108,7 @@ function App() {
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
   }
 
+  // 第三层：充值 API 余额
   const handleRechargeComplete = (amount: number) => {
     const newUserInfo = { ...userInfo, apiBalance: userInfo.apiBalance + amount }
     setUserInfo(newUserInfo)
@@ -108,6 +121,7 @@ function App() {
     setUserInfo({
       username: '演示用户',
       email: 'demo@jdoclaw.ai',
+      hasJoined: false,
       hasPurchased: false,
       apiBalance: 0
     })
@@ -139,6 +153,7 @@ function App() {
             onLogout={handleLogout}
             isDarkMode={isDarkMode}
             toggleDarkMode={toggleDarkMode}
+            onJoinComplete={handleJoinComplete}
             onPurchaseComplete={handlePurchaseComplete}
             onRechargeComplete={handleRechargeComplete}
           />
