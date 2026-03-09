@@ -15,8 +15,10 @@ interface ProfileProps {
 
 const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleDarkMode, deviceType }: ProfileProps) => {
   const [selectedModel, setSelectedModel] = useState(userInfo.selectedModel || 'GPT-4')
+  const [selectedVoice, setSelectedVoice] = useState('温柔女声')
   
   const models = ['GPT-4', 'GPT-3.5', 'Claude-3', 'Gemini-Pro']
+  const voices = ['温柔女声', '成熟男声', '甜美女声', '磁性男声', '活力女声', '稳重男声']
   
   // 模拟消费记录
   const usageRecords: UsageRecord[] = [
@@ -102,6 +104,18 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                     ))}
                   </div>
                 </div>
+
+                <div className="car-voice-section">
+                  <h3 className="car-section-title">🎵 音色设置</h3>
+                  <div className="car-voice-list">
+                    {voices.map((voice) => (
+                      <button key={voice} className={`car-voice-btn ${selectedVoice === voice ? 'active' : ''}`} onClick={() => setSelectedVoice(voice)}>
+                        <span className="car-voice-name">{voice}</span>
+                        {selectedVoice === voice && <span className="car-voice-check">✓</span>}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* 右侧：消费记录 */}
@@ -176,6 +190,18 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                 </div>
               </div>
 
+              <div className="voice-section">
+                <h3 className="section-title">🎵 音色设置</h3>
+                <div className="voice-grid">
+                  {voices.map((voice) => (
+                    <button key={voice} className={`voice-card ${selectedVoice === voice ? 'active' : ''}`} onClick={() => setSelectedVoice(voice)}>
+                      <span className="voice-name">{voice}</span>
+                      {selectedVoice === voice && <span className="voice-check">✓</span>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="usage-section">
                 <h3 className="section-title">消费记录</h3>
                 <div className="usage-list">
@@ -240,6 +266,18 @@ const Profile = ({ userInfo, onBack, onRenew, onModelChange, isDarkMode, toggleD
                   <button key={model} className={`model-card ${selectedModel === model ? 'active' : ''}`} onClick={() => handleModelChange(model)}>
                     <span className="model-name">{model}</span>
                     {selectedModel === model && <span className="model-check">✓</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="voice-section">
+              <h3 className="section-title">🎵 音色设置</h3>
+              <div className="voice-grid">
+                {voices.map((voice) => (
+                  <button key={voice} className={`voice-card ${selectedVoice === voice ? 'active' : ''}`} onClick={() => setSelectedVoice(voice)}>
+                    <span className="voice-name">{voice}</span>
+                    {selectedVoice === voice && <span className="voice-check">✓</span>}
                   </button>
                 ))}
               </div>
