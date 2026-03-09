@@ -4,10 +4,10 @@ import Roadbook from './Roadbook'
 import Tasks from './Tasks'
 import Profile from './Profile'
 import BotDeploy from './BotDeploy'
-import Purchase from './Purchase'
-import Recharge from './Recharge'
 import Sidebar, { type SidebarTab } from './Sidebar'
-import PaymentModal from './PaymentModal'
+import JoinModal from './JoinModal'
+import PurchaseModal from './PurchaseModal'
+import RechargeModal from './RechargeModal'
 import type { UserInfo, DeviceType } from '../types'
 import './MainApp.css'
 
@@ -22,7 +22,6 @@ interface MainAppProps {
   onRechargeComplete: (amount: number) => void
 }
 
-type ViewMode = 'main' | 'join' | 'purchase' | 'recharge'
 type ModalType = null | 'join' | 'purchase' | 'recharge'
 
 const MainApp = ({ 
@@ -37,7 +36,6 @@ const MainApp = ({
 }: MainAppProps) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('chat')
   const [modalType, setModalType] = useState<ModalType>(null)
-  const [viewMode, setViewMode] = useState<ViewMode>('main')
 
   // 三层检查：发送消息时的检查逻辑
   const handleBalanceCheck = () => {
@@ -60,51 +58,29 @@ const MainApp = ({
     }
   }
 
-  const handleGoPurchase = () => {
-    setShowPaymentModal(false)
-    setViewMode('purchase')
+  // 处理加入会员
+  const handleJoinComplete = () => {
+    onJoinComplete()
+    setModalType(null)
+    // 加入后立即弹出购买沙箱弹窗
+    setTimeout(() => setModalType('purchase'), 300)
   }
 
-  const handleGoRecharge = () => {
-    setShowPaymentModal(false)
-    setViewMode('recharge')
-  }
-
+  // 处理购买沙箱
   const handlePurchaseComplete = (packageType: 'monthly' | 'quarterly' | 'yearly') => {
     onPurchaseComplete(packageType)
-    // 购买后跳转到充值页面
-    setViewMode('recharge')
+    setModalType(null)
+    // 购买后立即弹出充值弹窗
+    setTimeout(() => setModalType('recharge'), 300)
   }
 
-  const handleRechargeComplete = () => {
-    onRechargeComplete(100) // 默认充值100元
-    // 充值后返回聊天
-    setViewMode('main')
-    setActiveTab('chat')
+  // 处理充值
+  const handleRechargeComplete = (amount: number) => {
+    onRechargeComplete(amount)
+    setModalType(null)
   }
 
-  // 如果在购买或充值页面，直接渲染对应页面
-  if (viewMode === 'purchase') {
-    return (
-      <Purchase
-        onComplete={handlePurchaseComplete}
-        isDarkMode={isDarkMode}
-        toggleDarkMode={toggleDarkMode}
-      />
-    )
-  }
-
-  if (viewMode === 'recharge') {
-    return (
-      <Recharge
-        onComplete={handleRechargeComplete}
-        isDarkMode={isDarkMode}
-        currentBalance={userInfo.apiBalance}
-      />
-    )
-  }
-
-  // 正常的主界面
+  // 渲染内容区域
   const renderContent = () => {
     switch (activeTab) {
       case 'chat':
@@ -118,49 +94,57 @@ const MainApp = ({
           />
         )
       case 'roadbook':
-        return <Roadbook isDarkMode={isDarkMode} />
+        return <Roadbook />
       case 'tasks':
-        return <Tasks isDarkMode={isDarkMode} />
+        return <Tasks />
+      case 'deploy':
+        return <BotDeploy />
       case 'profile':
         return (
           <Profile
             userInfo={userInfo}
             deviceType={deviceType}
             isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
             onBack={() => setActiveTab('chat')}
-            onRenew={handleGoRecharge}
-            onModelChange={() => {}}
           />
         )
-      case 'botDeploy':
-        return <BotDeploy isDarkMode={isDarkMode} />
       default:
         return null
     }
   }
 
   return (
-    <div className={`main-app ${deviceType}`}>
-      <Sidebar 
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
-      
-      <div className="main-content">
+    <div className={`main-app-wrapper ${isDarkMode ? 'dark' : ''}`}>
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      <div className="main-app-content">
         {renderContent()}
       </div>
 
-      <PaymentModal
-        isOpen={showPaymentModal}
-        hasPurchased={userInfo.hasPurchased}
-        apiBalance={userInfo.apiBalance}
-        packageType={userInfo.packageName || '未购买'}
-        packageExpiry={userInfo.subscriptionExpiry || ''}
-        onClose={() => setShowPaymentModal(false)}
-        onGoPurchase={handleGoPurchase}
-        onGoRecharge={handleGoRecharge}
-      />
+      {/* 三层弹窗 */}
+      {modalType === 'join' && (
+        <JoinModal
+          onJoin={handleJoinComplete}
+          onClose={() => setModalType(null)}
+          isDarkMode={isDarkMode}
+        />
+      )}
+
+      {modalType === 'purchase' && (
+        <PurchaseModal
+          onPurchase={handlePurchaseComplete}
+          onClose={() => setModalType(null)}
+          isDarkMode={isDarkMode}
+        />
+      )}
+
+      {modalType === 'recharge' && (
+        <RechargeModal
+          currentBalance={userInfo.apiBalance}
+          onRecharge={handleRechargeComplete}
+          onClose={() => setModalType(null)}
+          isDarkMode={isDarkMode}
+        />
+      )}
     </div>
   )
 }
