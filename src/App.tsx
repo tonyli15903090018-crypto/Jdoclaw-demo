@@ -13,6 +13,7 @@ type AppStage = 'login' | 'createBot' | 'main'
 function App() {
   const [stage, setStage] = useState<AppStage>('login')
   const [isDarkMode, setIsDarkMode] = useState(false)
+  // 强制设置为 mobile，确保显示 iPhone 容器
   const [deviceType, setDeviceType] = useState<DeviceType>('mobile')
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: '演示用户',
@@ -22,42 +23,25 @@ function App() {
   })
 
   useEffect(() => {
-    // Demo 模式：刷新后清除所有状态，回到登录页
-    const isDemoMode = true
-    
-    if (isDemoMode) {
-      localStorage.clear()
-      setStage('login')
-      return
-    }
-    
-    // 正常模式：检查本地存储
-    const savedStage = localStorage.getItem('app_stage')
-    const savedUserInfo = localStorage.getItem('user_info')
-    const darkMode = localStorage.getItem('dark_mode') === 'true'
-    const savedDeviceType = localStorage.getItem('device_type') as DeviceType
-    
-    if (savedStage) setStage(savedStage as AppStage)
-    if (savedUserInfo) {
-      try {
-        setUserInfo(JSON.parse(savedUserInfo))
-      } catch (e) {
-        console.error('Failed to parse user info:', e)
-      }
-    }
-    if (savedDeviceType) setDeviceType(savedDeviceType)
-    setIsDarkMode(darkMode)
+    // Demo 模式：刷新后清除状态，但保持 mobile 设备类型
+    localStorage.clear()
+    setStage('login')
+    setDeviceType('mobile') // 确保是 mobile
   }, [])
 
   useEffect(() => {
     document.body.className = isDarkMode ? 'dark' : ''
   }, [isDarkMode])
 
+  useEffect(() => {
+    // 调试：在控制台打印 deviceType
+    console.log('Current deviceType:', deviceType)
+  }, [deviceType])
+
   const handleLogin = (username: string, email: string) => {
     const newUserInfo = { ...userInfo, username, email }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    // 登录后创建机器人
     setStage('createBot')
     localStorage.setItem('app_stage', 'createBot')
   }
@@ -70,7 +54,6 @@ function App() {
     }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    // 创建机器人后直接进入聊天
     setStage('main')
     localStorage.setItem('app_stage', 'main')
   }
@@ -126,6 +109,7 @@ function App() {
   }
 
   const handleDeviceChange = (device: DeviceType) => {
+    console.log('Changing device to:', device)
     setDeviceType(device)
     localStorage.setItem('device_type', device)
   }
@@ -155,7 +139,7 @@ function App() {
 
   return (
     <div className={`app-container ${isDarkMode ? 'dark' : 'light'}`}>
-      {/* 设备切换器 */}
+      {/* 设备切换器 - 固定在底部 */}
       <DeviceSwitcher deviceType={deviceType} onDeviceChange={handleDeviceChange} />
       
       {/* 根据设备类型决定是否使用 iPhone 容器 */}
@@ -164,7 +148,9 @@ function App() {
           {renderContent()}
         </iPhone17Container>
       ) : (
-        renderContent()
+        <div className="desktop-content">
+          {renderContent()}
+        </div>
       )}
     </div>
   )
