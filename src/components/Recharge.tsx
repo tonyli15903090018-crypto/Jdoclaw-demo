@@ -1,70 +1,69 @@
 import { useState } from 'react'
-import type { DeviceType } from '../types'
 import './Recharge.css'
 
 interface RechargeProps {
-  deviceType: DeviceType
-  onRecharge: (amount: number) => void
+  onComplete: () => void
   isDarkMode: boolean
-  toggleDarkMode: () => void
+  currentBalance: number
 }
 
-const Recharge = ({ onRecharge, isDarkMode, toggleDarkMode, deviceType }: RechargeProps) => {
+const Recharge = ({ onComplete, isDarkMode, currentBalance }: RechargeProps) => {
   const [selectedAmount, setSelectedAmount] = useState(100)
 
-  const amounts = [50, 100, 200, 500]
+  const amounts = [
+    { value: 50, label: '¥50', desc: '' },
+    { value: 100, label: '¥100', desc: '推荐', popular: true },
+    { value: 200, label: '¥200', desc: '' },
+    { value: 500, label: '¥500', desc: '' }
+  ]
+
+  const handleRecharge = () => {
+    // 模拟充值成功
+    onComplete()
+  }
 
   return (
-    <div className={`recharge-container ${deviceType}`}>
-      <button className="theme-toggle" onClick={toggleDarkMode}>
-        {isDarkMode ? '☀️' : '🌙'}
+    <div className={`recharge-page ${isDarkMode ? 'dark' : 'light'}`}>
+      <div className="recharge-header">
+        <h1>API余额充值</h1>
+        <div className="current-balance">
+          <span>当前余额：</span>
+          <span className="balance-amount">¥{currentBalance.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div className="recharge-description">
+        <p>💡 API调用采用按token计费模式</p>
+        <p>不同AI模型的token单价不同，具体价格在模型切换界面查看</p>
+        <p className="note">余额永久有效，可跨设备使用</p>
+      </div>
+
+      <div className="amount-list">
+        {amounts.map((amount) => (
+          <div
+            key={amount.value}
+            className={`amount-card ${selectedAmount === amount.value ? 'selected' : ''} ${
+              amount.popular ? 'popular' : ''
+            }`}
+            onClick={() => setSelectedAmount(amount.value)}
+          >
+            {amount.popular && <div className="popular-badge">推荐</div>}
+            <div className="amount-label">{amount.label}</div>
+            {amount.desc && <div className="amount-desc">{amount.desc}</div>}
+            <div className="amount-radio">
+              {selectedAmount === amount.value && <span className="checkmark">✓</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button className="recharge-button" onClick={handleRecharge}>
+        确认充值 ¥{selectedAmount}
       </button>
-      
-      <div className="recharge-card">
-        <div className="recharge-header">
-          <h1 className="recharge-title">API 充值</h1>
-          <p className="recharge-subtitle">充值后即可开始使用 AI 服务</p>
-        </div>
 
-        <div className="balance-display">
-          <span className="balance-label">当前余额</span>
-          <span className="balance-amount">¥ 0.00</span>
-        </div>
-
-        <div className="amount-options">
-          {amounts.map(amount => (
-            <button
-              key={amount}
-              className={`amount-btn ${selectedAmount === amount ? 'active' : ''}`}
-              onClick={() => setSelectedAmount(amount)}
-            >
-              <span className="amount-value">¥{amount}</span>
-              {amount === 100 && <span className="amount-badge">推荐</span>}
-            </button>
-          ))}
-        </div>
-
-        <div className="recharge-info">
-          <div className="info-item">
-            <span className="info-label">充值金额：</span>
-            <span className="info-value">¥{selectedAmount}</span>
-          </div>
-          <div className="info-item">
-            <span className="info-label">API 调用次数：</span>
-            <span className="info-value">约 {selectedAmount * 10} 次</span>
-          </div>
-        </div>
-
-        <button
-          className="btn btn-primary recharge-btn"
-          onClick={() => onRecharge(selectedAmount)}
-        >
-          确认充值
-        </button>
-
-        <p className="recharge-note">
-          * 这是演示版本，点击按钮即可获得体验额度
-        </p>
+      <div className="recharge-footer">
+        <p>支付后余额立即到账</p>
+        <p>支持微信支付、支付宝</p>
       </div>
     </div>
   )

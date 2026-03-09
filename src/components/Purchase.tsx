@@ -1,138 +1,116 @@
 import { useState } from 'react'
-import type { DeviceType } from '../types'
 import './Purchase.css'
 
+type PackageType = 'monthly' | 'quarterly' | 'yearly'
+
 interface PurchaseProps {
-  deviceType: DeviceType
-  onPurchase: () => void
+  onComplete: (packageType: PackageType) => void
   isDarkMode: boolean
   toggleDarkMode: () => void
+  deviceType: string
 }
 
-type PlanType = 'monthly' | 'quarterly' | 'yearly'
+const Purchase = ({ onComplete, isDarkMode, toggleDarkMode, deviceType }: PurchaseProps) => {
+  const [selectedPackage, setSelectedPackage] = useState<PackageType>('quarterly')
+  const [autoRenew, setAutoRenew] = useState(false)
 
-const Purchase = ({ onPurchase, isDarkMode, toggleDarkMode, deviceType }: PurchaseProps) => {
-  const [selectedPlan, setSelectedPlan] = useState<PlanType>('yearly')
-  const [autoRenew, setAutoRenew] = useState(true)
-
-  const plans = [
-    { type: 'monthly' as PlanType, name: '月付', price: 33, period: '月' },
-    { type: 'quarterly' as PlanType, name: '季付', price: 66, period: '季', badge: '省 17%' },
-    { type: 'yearly' as PlanType, name: '年付', price: 99, period: '年', badge: '最划算' }
+  const packages = [
+    {
+      type: 'monthly' as PackageType,
+      name: '月付套餐',
+      price: 33,
+      period: '1个月',
+      desc: '按月订阅',
+      popular: false
+    },
+    {
+      type: 'quarterly' as PackageType,
+      name: '季付套餐',
+      price: 66,
+      period: '3个月',
+      desc: '省17%，推荐',
+      popular: true
+    },
+    {
+      type: 'yearly' as PackageType,
+      name: '年付套餐',
+      price: 99,
+      period: '12个月',
+      desc: '最划算',
+      popular: false
+    }
   ]
 
-  const currentPlan = plans.find(p => p.type === selectedPlan)!
+  const handlePurchase = () => {
+    // 模拟支付成功
+    onComplete(selectedPackage)
+  }
+
   return (
-    <div className={`purchase-container ${deviceType}`}>
-      <button className="theme-toggle" onClick={toggleDarkMode}>
-        {isDarkMode ? '☀️' : '🌙'}
+    <div className={`purchase-page ${isDarkMode ? 'dark' : 'light'}`}>
+      <div className="purchase-header">
+        <h1>选择订阅套餐</h1>
+        <button className="dark-mode-toggle" onClick={toggleDarkMode}>
+          {isDarkMode ? '🌞' : '🌙'}
+        </button>
+      </div>
+
+      <div className="purchase-description">
+        <p>购买沙箱配置服务，享受以下权益：</p>
+        <ul>
+          <li>✅ 独立沙箱环境创建与维护</li>
+          <li>✅ API接入服务（无需自行购买API）</li>
+          <li>✅ 多设备同步服务</li>
+          <li>✅ 数据加密存储</li>
+          <li>✅ 技术支持</li>
+        </ul>
+        <p className="note">💡 注意：API调用费用独立计费，需单独充值。</p>
+      </div>
+
+      <div className="package-list">
+        {packages.map((pkg) => (
+          <div
+            key={pkg.type}
+            className={`package-card ${selectedPackage === pkg.type ? 'selected' : ''} ${
+              pkg.popular ? 'popular' : ''
+            }`}
+            onClick={() => setSelectedPackage(pkg.type)}
+          >
+            {pkg.popular && <div className="popular-badge">推荐</div>}
+            <div className="package-header">
+              <h3>{pkg.name}</h3>
+              <div className="package-price">
+                <span className="currency">¥</span>
+                <span className="amount">{pkg.price}</span>
+                <span className="period">/{pkg.period}</span>
+              </div>
+            </div>
+            <p className="package-desc">{pkg.desc}</p>
+            <div className="package-radio">
+              {selectedPackage === pkg.type && <span className="checkmark">✓</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="auto-renew">
+        <label>
+          <input
+            type="checkbox"
+            checked={autoRenew}
+            onChange={(e) => setAutoRenew(e.target.checked)}
+          />
+          <span>开启自动续费（到期前3天提醒）</span>
+        </label>
+      </div>
+
+      <button className="purchase-button" onClick={handlePurchase}>
+        立即购买 ¥{packages.find((p) => p.type === selectedPackage)?.price}
       </button>
-      
-      <div className="purchase-card">
-        <div className="purchase-header">
-          <h1 className="purchase-title">选择您的套餐</h1>
-          <p className="purchase-subtitle">一次购买，永久使用</p>
-        </div>
 
-        <div className="differentiator">
-          <div className="diff-badge">🚀 核心优势</div>
-          <h2 className="diff-title">买服务，不买 API</h2>
-          <p className="diff-desc">
-            <strong>¥99 购买的是沙箱一键配置服务</strong>，让您告别繁琐的 API 对接！
-            <br />
-            后续 AI 调用费用独立计费，清晰透明，您可以：
-          </p>
-          <ul className="benefit-list">
-            <li>✅ 查看详细账单明细</li>
-            <li>✅ 自由切换 AI 模型</li>
-            <li>✅ 按实际用量付费</li>
-          </ul>
-          <div className="comparison">
-            <div className="comparison-item other">
-              <span className="comparison-label">❌ 其他产品</span>
-              <span className="comparison-text">购买API → 配置参数 → 对接软件 → 调试测试</span>
-            </div>
-            <div className="comparison-item ours">
-              <span className="comparison-label">✅ Jdoclaw</span>
-              <span className="comparison-text">购买服务 → 充值 → 使用，全程 3 分钟</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="pricing-card">
-          <div className="pricing-badge">推荐</div>
-          <h2 className="pricing-name">Jdoclaw 沙箱配置服务</h2>
-
-          <div className="plan-selector">
-            {plans.map((plan) => (
-              <button
-                key={plan.type}
-                className={`plan-option ${selectedPlan === plan.type ? 'active' : ''}`}
-                onClick={() => setSelectedPlan(plan.type)}
-              >
-                {plan.badge && <span className="plan-badge">{plan.badge}</span>}
-                <span className="plan-name">{plan.name}</span>
-                <span className="plan-price">¥{plan.price}/{plan.period}</span>
-              </button>
-            ))}
-          </div>
-
-          <div className="pricing-price">
-            <span className="price-currency">¥</span>
-            <span className="price-amount">{currentPlan.price}</span>
-            <span className="price-period">/{currentPlan.period}</span>
-          </div>
-
-          <div className="auto-renew">
-            <label className="renew-checkbox">
-              <input
-                type="checkbox"
-                checked={autoRenew}
-                onChange={(e) => setAutoRenew(e.target.checked)}
-              />
-              <span>自动续费（可随时取消）</span>
-            </label>
-          </div>
-
-          <ul className="feature-list">
-            <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>沙箱环境一键配置</span>
-            </li>
-            <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>无需对接飞书/QQ/微信</span>
-            </li>
-            <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>多设备同步（手机/电脑/车机）</span>
-            </li>
-            <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>智能家居设备控制</span>
-            </li>
-            <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>场景自动化配置</span>
-            </li>
-            <li className="feature-item">
-              <span className="feature-icon">✅</span>
-              <span>数据加密存储</span>
-            </li>
-            <li className="feature-item">
-              <span className="feature-icon">💰</span>
-              <span>API 费用独立计费，明细清晰</span>
-            </li>
-          </ul>
-
-          <button className="btn btn-primary purchase-btn" onClick={onPurchase}>
-            立即购买
-          </button>
-
-          <p className="purchase-note">
-            * 这是演示版本，点击按钮即可体验所有功能
-          </p>
-        </div>
+      <div className="purchase-footer">
+        <p>支付后自动创建独立沙箱环境</p>
+        <p>支持微信支付、支付宝</p>
       </div>
     </div>
   )

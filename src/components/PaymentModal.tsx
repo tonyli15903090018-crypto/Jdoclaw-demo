@@ -1,94 +1,63 @@
-import { useState } from 'react'
 import './PaymentModal.css'
 
 interface PaymentModalProps {
   isOpen: boolean
-  onClose: () => void
-  sandboxBalance: number
+  hasPurchased: boolean
   apiBalance: number
-  onRecharge: (amount: number) => void
+  packageType?: string
+  packageExpiry?: string
+  onClose: () => void
+  onGoPurchase: () => void
+  onGoRecharge: () => void
 }
 
-const PaymentModal = ({ isOpen, onClose, sandboxBalance, apiBalance, onRecharge }: PaymentModalProps) => {
-  const [amount, setAmount] = useState(100)
-  const [paymentMethod, setPaymentMethod] = useState<'wechat' | 'alipay'>('wechat')
-
+const PaymentModal = ({
+  isOpen,
+  hasPurchased,
+  apiBalance,
+  packageType,
+  packageExpiry,
+  onClose,
+  onGoPurchase,
+  onGoRecharge
+}: PaymentModalProps) => {
   if (!isOpen) return null
-
-  const handleRecharge = () => {
-    onRecharge(amount)
-    onClose()
-  }
 
   return (
     <div className="payment-modal-overlay" onClick={onClose}>
       <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>×</button>
+        <button className="modal-close" onClick={onClose}>×</button>
         
-        <h2>💰 账户充值</h2>
-        
-        <div className="balance-section">
-          <div className="balance-item">
-            <span className="balance-label">🧪 沙箱余额</span>
-            <span className="balance-value">¥{sandboxBalance.toFixed(2)}</span>
-          </div>
-          <div className="balance-item">
-            <span className="balance-label">🔑 API 余额</span>
-            <span className="balance-value">¥{apiBalance.toFixed(2)}</span>
-          </div>
-        </div>
-
-        <div className="recharge-section">
-          <h3>充值金额</h3>
-          <div className="amount-options">
-            {[100, 200, 500, 1000, 2000, 5000].map(val => (
-              <button
-                key={val}
-                className={`amount-btn ${amount === val ? 'active' : ''}`}
-                onClick={() => setAmount(val)}
-              >
-                ¥{val}
-              </button>
-            ))}
-          </div>
-          
-          <div className="custom-amount">
-            <label>自定义金额：</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              min="1"
-              placeholder="请输入金额"
-            />
-          </div>
-        </div>
-
-        <div className="payment-method">
-          <h3>支付方式</h3>
-          <div className="method-options">
-            <button
-              className={`method-btn ${paymentMethod === 'wechat' ? 'active' : ''}`}
-              onClick={() => setPaymentMethod('wechat')}
-            >
-              💚 微信支付
+        {!hasPurchased ? (
+          // 未购买套餐
+          <>
+            <div className="modal-icon">📦</div>
+            <h2>请先购买订阅套餐</h2>
+            <p>购买后即可使用AI助手服务</p>
+            <div className="modal-info">
+              <p>✅ 独立沙箱环境</p>
+              <p>✅ API接入服务</p>
+              <p>✅ 多设备同步</p>
+            </div>
+            <button className="modal-button primary" onClick={onGoPurchase}>
+              去购买套餐
             </button>
-            <button
-              className={`method-btn ${paymentMethod === 'alipay' ? 'active' : ''}`}
-              onClick={() => setPaymentMethod('alipay')}
-            >
-              💙 支付宝
+          </>
+        ) : (
+          // 已购买但余额不足
+          <>
+            <div className="modal-icon">💰</div>
+            <h2>API余额不足</h2>
+            <p>当前余额：¥{apiBalance.toFixed(2)}</p>
+            <div className="modal-info">
+              <p>📋 套餐类型：{packageType}</p>
+              <p>⏰ 到期时间：{packageExpiry}</p>
+            </div>
+            <button className="modal-button primary" onClick={onGoRecharge}>
+              立即充值
             </button>
-          </div>
-        </div>
-
-        <button className="recharge-btn" onClick={handleRecharge}>
-          立即充值 ¥{amount}
-        </button>
-
-        <div className="payment-note">
-          ℹ️ 充值后即时到账，可用于 API 调用和沙箱测试
-        </div>
+          </>
+        )}
       </div>
     </div>
   )
