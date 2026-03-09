@@ -47,8 +47,8 @@ function App() {
     const newUserInfo = { ...userInfo, username, email }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    setStage('purchase')
-    localStorage.setItem('app_stage', 'purchase')
+    setStage('createBot')
+    localStorage.setItem('app_stage', 'createBot')
   }
 
   const handlePurchase = () => {
