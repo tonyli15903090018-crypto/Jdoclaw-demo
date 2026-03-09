@@ -4,7 +4,7 @@ interface RoadbookProps {
   isDarkMode: boolean
 }
 
-const Roadbook = ({ isDarkMode }: RoadbookProps) => {
+const Roadbook = ({}: RoadbookProps) => {
   const roadbooks = [
     {
       id: 1,

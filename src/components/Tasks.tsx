@@ -15,7 +15,7 @@ interface TasksProps {
   isDarkMode: boolean
 }
 
-const Tasks = ({ isDarkMode }: TasksProps) => {
+const Tasks = ({}: TasksProps) => {
   const [tasks] = useState<Task[]>([
     {
       id: 1,
@@ -54,22 +54,6 @@ const Tasks = ({ isDarkMode }: TasksProps) => {
       tags: ['装备', '露营']
     }
   ])
-
-  const getStatusIcon = (status: Task['status']) => {
-    switch (status) {
-      case 'pending': return '⏳'
-      case 'in-progress': return '🔄'
-      case 'completed': return '✅'
-    }
-  }
-
-  const getStatusText = (status: Task['status']) => {
-    switch (status) {
-      case 'pending': return '待处理'
-      case 'in-progress': return '进行中'
-      case 'completed': return '已完成'
-    }
-  }
 
   const getPriorityColor = (priority: Task['priority']) => {
     switch (priority) {

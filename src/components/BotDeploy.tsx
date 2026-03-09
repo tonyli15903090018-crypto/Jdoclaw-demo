@@ -15,7 +15,7 @@ interface DeployedBot {
   lastActive: string
 }
 
-const BotDeploy = ({ isDarkMode }: BotDeployProps) => {
+const BotDeploy = ({}: BotDeployProps) => {
   const [activeTab, setActiveTab] = useState<'deployed' | 'deploy'>('deployed')
 
   const deployedBots: DeployedBot[] = [
