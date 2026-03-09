@@ -101,7 +101,7 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onB
   }
 
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${deviceType}`}>
       {/* 顶部导航栏 */}
       <header className="chat-header">
         <div className="header-left">

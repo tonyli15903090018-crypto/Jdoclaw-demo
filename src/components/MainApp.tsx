@@ -98,7 +98,7 @@ const MainApp = ({
       case 'tasks':
         return <Tasks />
       case 'deploy':
-        return <BotDeploy />
+        return <BotDeploy isDarkMode={isDarkMode} />
       case 'profile':
         return (
           <Profile

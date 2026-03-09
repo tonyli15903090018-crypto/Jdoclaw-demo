@@ -1,5 +1,5 @@
 // 设备类型
-export type DeviceType = 'desktop' | 'mobile' | 'car'
+export type DeviceType = 'mobile' | 'car'
 
 // 用户状态
 export interface UserInfo {

@@ -383,3 +383,66 @@
     opacity: 0;
   }
 }
+
+/* ===== 车机端适配 ===== */
+.chat-container.car {
+  font-size: 18px;
+}
+
+.chat-container.car .chat-header {
+  padding: 24px 32px;
+}
+
+.chat-container.car .header-title {
+  font-size: 24px;
+}
+
+.chat-container.car .icon-btn {
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+}
+
+.chat-container.car .user-name {
+  font-size: 18px;
+  padding: 12px 20px;
+}
+
+.chat-container.car .chat-messages {
+  padding: 32px;
+}
+
+.chat-container.car .message-avatar {
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
+}
+
+.chat-container.car .message-bubble {
+  padding: 16px 20px;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.chat-container.car .message-time {
+  font-size: 14px;
+}
+
+.chat-container.car .chat-input-area {
+  padding: 24px 32px;
+}
+
+.chat-container.car .chat-input {
+  font-size: 18px;
+  padding: 16px;
+}
+
+.chat-container.car .send-btn {
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+}
+
+.chat-container.car .voice-call-btn {
+  font-size: 32px;
+}
