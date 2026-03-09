@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import Login from './components/Login'
-import Purchase from './components/Purchase'
-import Recharge from './components/Recharge'
 import CreateBot from './components/CreateBot'
 import MainApp from './components/MainApp'
 import DeviceSwitcher from './components/DeviceSwitcher'
@@ -10,7 +8,7 @@ import iPhone17Container from './components/iPhone17Container'
 import type { UserInfo, DeviceType } from './types'
 import './App.css'
 
-type AppStage = 'login' | 'purchase' | 'recharge' | 'createBot' | 'main'
+type AppStage = 'login' | 'createBot' | 'main'
 
 function App() {
   const [stage, setStage] = useState<AppStage>('login')
@@ -25,7 +23,7 @@ function App() {
 
   useEffect(() => {
     // Demo 模式：刷新后清除所有状态，回到登录页
-    const isDemoMode = true // 设为 false 可保留状态
+    const isDemoMode = true
     
     if (isDemoMode) {
       localStorage.clear()
@@ -59,12 +57,25 @@ function App() {
     const newUserInfo = { ...userInfo, username, email }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    // 登录后先购买套餐
-    setStage('purchase')
-    localStorage.setItem('app_stage', 'purchase')
+    // 登录后创建机器人
+    setStage('createBot')
+    localStorage.setItem('app_stage', 'createBot')
   }
 
-  const handlePurchase = (packageType: 'monthly' | 'quarterly' | 'yearly') => {
+  const handleCreateBot = (botName: string, botAvatar: string) => {
+    const newUserInfo = { 
+      ...userInfo, 
+      botName, 
+      botAvatar
+    }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+    // 创建机器人后直接进入聊天
+    setStage('main')
+    localStorage.setItem('app_stage', 'main')
+  }
+
+  const handlePurchaseComplete = (packageType: 'monthly' | 'quarterly' | 'yearly') => {
     const expiry = new Date()
     if (packageType === 'monthly') {
       expiry.setMonth(expiry.getMonth() + 1)
@@ -89,32 +100,12 @@ function App() {
     }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    // 购买后充值API
-    setStage('recharge')
-    localStorage.setItem('app_stage', 'recharge')
   }
 
-  const handleRecharge = () => {
-    // 模拟充值100元
-    const newUserInfo = { ...userInfo, apiBalance: userInfo.apiBalance + 100 }
+  const handleRechargeComplete = (amount: number) => {
+    const newUserInfo = { ...userInfo, apiBalance: userInfo.apiBalance + amount }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    // 充值后创建机器人
-    setStage('createBot')
-    localStorage.setItem('app_stage', 'createBot')
-  }
-
-  const handleCreateBot = (botName: string, botAvatar: string) => {
-    const newUserInfo = { 
-      ...userInfo, 
-      botName, 
-      botAvatar
-    }
-    setUserInfo(newUserInfo)
-    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
-    // 创建机器人后进入主界面
-    setStage('main')
-    localStorage.setItem('app_stage', 'main')
   }
 
   const handleLogout = () => {
@@ -143,10 +134,6 @@ function App() {
     switch (stage) {
       case 'login':
         return <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
-      case 'purchase':
-        return <Purchase onComplete={handlePurchase} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      case 'recharge':
-        return <Recharge onComplete={handleRecharge} isDarkMode={isDarkMode} currentBalance={userInfo.apiBalance} />
       case 'createBot':
         return <CreateBot onComplete={handleCreateBot} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
       case 'main':
@@ -157,6 +144,8 @@ function App() {
             onLogout={handleLogout}
             isDarkMode={isDarkMode}
             toggleDarkMode={toggleDarkMode}
+            onPurchaseComplete={handlePurchaseComplete}
+            onRechargeComplete={handleRechargeComplete}
           />
         )
       default:
@@ -166,7 +155,7 @@ function App() {
 
   return (
     <div className={`app-container ${isDarkMode ? 'dark' : 'light'}`}>
-      {/* 设备切换器（只在车端和移动端之间切换） */}
+      {/* 设备切换器 */}
       <DeviceSwitcher deviceType={deviceType} onDeviceChange={handleDeviceChange} />
       
       {/* 根据设备类型决定是否使用 iPhone 容器 */}

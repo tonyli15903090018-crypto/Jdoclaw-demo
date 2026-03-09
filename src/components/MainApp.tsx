@@ -4,6 +4,8 @@ import Roadbook from './Roadbook'
 import Tasks from './Tasks'
 import Profile from './Profile'
 import BotDeploy from './BotDeploy'
+import Purchase from './Purchase'
+import Recharge from './Recharge'
 import Sidebar, { type SidebarTab } from './Sidebar'
 import PaymentModal from './PaymentModal'
 import type { UserInfo, DeviceType } from '../types'
@@ -15,19 +17,26 @@ interface MainAppProps {
   onLogout: () => void
   isDarkMode: boolean
   toggleDarkMode: () => void
+  onPurchaseComplete: (packageType: 'monthly' | 'quarterly' | 'yearly') => void
+  onRechargeComplete: (amount: number) => void
 }
+
+type ViewMode = 'main' | 'purchase' | 'recharge'
 
 const MainApp = ({ 
   userInfo, 
   deviceType, 
   onLogout,
   isDarkMode, 
-  toggleDarkMode 
+  toggleDarkMode,
+  onPurchaseComplete,
+  onRechargeComplete
 }: MainAppProps) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('chat')
   const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('main')
 
-  // Chat 组件会在发送消息时检查余额并触发此函数
+  // Chat 组件发送消息时检查余额
   const handleBalanceCheck = () => {
     if (!userInfo.hasPurchased || userInfo.apiBalance <= 0) {
       setShowPaymentModal(true)
@@ -35,17 +44,50 @@ const MainApp = ({
   }
 
   const handleGoPurchase = () => {
-    // TODO: 跳转到购买页面（这里暂时只关闭弹窗）
     setShowPaymentModal(false)
-    alert('请返回购买套餐页面')
+    setViewMode('purchase')
   }
 
   const handleGoRecharge = () => {
-    // TODO: 跳转到充值页面（这里暂时只关闭弹窗）
     setShowPaymentModal(false)
-    alert('请前往充值页面')
+    setViewMode('recharge')
   }
 
+  const handlePurchaseComplete = (packageType: 'monthly' | 'quarterly' | 'yearly') => {
+    onPurchaseComplete(packageType)
+    // 购买后跳转到充值页面
+    setViewMode('recharge')
+  }
+
+  const handleRechargeComplete = () => {
+    onRechargeComplete(100) // 默认充值100元
+    // 充值后返回聊天
+    setViewMode('main')
+    setActiveTab('chat')
+  }
+
+  // 如果在购买或充值页面，直接渲染对应页面
+  if (viewMode === 'purchase') {
+    return (
+      <Purchase
+        onComplete={handlePurchaseComplete}
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+      />
+    )
+  }
+
+  if (viewMode === 'recharge') {
+    return (
+      <Recharge
+        onComplete={handleRechargeComplete}
+        isDarkMode={isDarkMode}
+        currentBalance={userInfo.apiBalance}
+      />
+    )
+  }
+
+  // 正常的主界面
   const renderContent = () => {
     switch (activeTab) {
       case 'chat':
