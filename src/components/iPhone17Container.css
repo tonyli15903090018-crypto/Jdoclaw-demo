@@ -1,3 +1,16 @@
+/* Desktop/Car 内容区域 */
+.desktop-content {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* 车机端特殊样式 */
+.app-container .desktop-content {
+  padding: 0;
+  margin: 0;
+}
+
 /* iPhone 17 容器样式 */
 .iphone17-wrapper {
   display: flex;

@@ -152,16 +152,22 @@ function App() {
     <div className={`app-container ${isDarkMode ? 'dark' : 'light'}`}>
       <DeviceSwitcher deviceType={deviceType} onDeviceChange={handleDeviceChange} />
       
-      {/* iPhone 17 容器 - 直接内联HTML */}
-      <div className="iphone17-wrapper">
-        <div className={`iphone17-container ${isDarkMode ? 'dark' : 'light'}`}>
-          <div className="iphone17-notch" />
-          <div className="iphone17-screen">
-            {renderContent()}
+      {/* 根据设备类型决定是否使用 iPhone 容器 */}
+      {deviceType === 'mobile' ? (
+        <div className="iphone17-wrapper">
+          <div className={`iphone17-container ${isDarkMode ? 'dark' : 'light'}`}>
+            <div className="iphone17-notch" />
+            <div className="iphone17-screen">
+              {renderContent()}
+            </div>
+            <div className="iphone17-indicator" />
           </div>
-          <div className="iphone17-indicator" />
         </div>
-      </div>
+      ) : (
+        <div className="desktop-content">
+          {renderContent()}
+        </div>
+      )}
     </div>
   )
 }
