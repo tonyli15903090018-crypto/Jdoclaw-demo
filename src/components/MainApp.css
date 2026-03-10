@@ -499,24 +499,18 @@
 }
 
 /* 手机端: column布局,Sidebar自然在底部 */
-@media (max-width: 768px) {
-  .main-app-wrapper {
-    flex-direction: column;
-    padding-bottom: 0; /* 移除之前添加的padding */
-  }
-
-  .main-app-content {
-    flex: 1;
-    overflow-y: auto;
   }
 }
 
 /* 手机端专用样式 */
+/* 手机端专用样式 - 确保Sidebar在底部有空间 */
 .main-app-wrapper.mobile {
   flex-direction: column;
+  height: 100%;
 }
 
 .main-app-wrapper.mobile .main-app-content {
   flex: 1;
   overflow-y: auto;
+  min-height: 0; /* 防止flex item撑大 */
 }
