@@ -1,10 +1,12 @@
+import type { DeviceType } from '../types'
 import './Roadbook.css'
 
 interface RoadbookProps {
   isDarkMode: boolean
+  deviceType?: DeviceType
 }
 
-const Roadbook = ({}: RoadbookProps) => {
+const Roadbook = ({ deviceType = 'mobile' }: RoadbookProps) => {
   const roadbooks = [
     {
       id: 1,
@@ -36,7 +38,7 @@ const Roadbook = ({}: RoadbookProps) => {
   ]
 
   return (
-    <div className="roadbook-container">
+    <div className={`roadbook-container ${deviceType}`}>
       <div className="roadbook-header">
         <h1>🗺️ 我的路书</h1>
       </div>

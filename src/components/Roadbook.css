@@ -326,3 +326,128 @@ body.dark .roadbook-footer {
     font-size: 11px;
   }
 }
+
+/* 手机端完全重新设计 - 紧凑高效 */
+.roadbook-container.mobile {
+  padding: 12px;
+  padding-bottom: 90px;
+}
+
+.roadbook-container.mobile .roadbook-header {
+  margin-bottom: 12px;
+}
+
+.roadbook-container.mobile .roadbook-header h1 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.roadbook-container.mobile .create-roadbook-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+/* 统计卡片横向排列,更紧凑 */
+.roadbook-container.mobile .roadbook-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.roadbook-container.mobile .stat-card {
+  flex: 1;
+  padding: 10px 8px;
+  flex-direction: column;
+  text-align: center;
+  gap: 4px;
+}
+
+.roadbook-container.mobile .stat-icon {
+  font-size: 20px;
+}
+
+.roadbook-container.mobile .stat-value {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.roadbook-container.mobile .stat-label {
+  font-size: 10px;
+}
+
+/* 路书卡片极简设计 */
+.roadbook-container.mobile .roadbook-list {
+  gap: 10px;
+}
+
+.roadbook-container.mobile .roadbook-card {
+  padding: 12px;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* cover缩小为方形小图标 */
+.roadbook-container.mobile .roadbook-cover {
+  width: 60px;
+  height: 60px;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.roadbook-container.mobile .roadbook-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.roadbook-container.mobile .roadbook-content h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* meta信息紧凑排列 */
+.roadbook-container.mobile .roadbook-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+
+/* 景点标签缩小 */
+.roadbook-container.mobile .roadbook-highlights {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.roadbook-container.mobile .highlight-tag {
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+/* footer简化 */
+.roadbook-container.mobile .roadbook-footer {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.roadbook-container.mobile .created-date {
+  font-size: 10px;
+}
+
+.roadbook-container.mobile .roadbook-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.roadbook-container.mobile .action-btn {
+  padding: 4px 8px;
+  font-size: 11px;
+}
