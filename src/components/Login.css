@@ -188,3 +188,51 @@
   height: 56px;
   font-size: 24px;
 }
+
+/* 手机端自适应 - 减小间距和字体 */
+@media (max-width: 500px) {
+  .login-card {
+    padding: 24px 20px;
+    max-width: 100%;
+  }
+  
+  .brand-name {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  
+  .brand-slogan {
+    font-size: 12px;
+  }
+  
+  .login-header {
+    margin-bottom: 20px;
+  }
+  
+  .login-tabs {
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .login-form {
+    gap: 12px;
+  }
+  
+  .input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .btn {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .login-footer {
+    margin-top: 16px;
+  }
+}

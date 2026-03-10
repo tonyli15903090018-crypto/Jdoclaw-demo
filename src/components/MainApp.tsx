@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Chat from './Chat'
 import Roadbook from './Roadbook'
 import Tasks from './Tasks'
@@ -36,6 +36,14 @@ const MainApp = ({
 }: MainAppProps) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('chat')
   const [modalType, setModalType] = useState<ModalType>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  // 切换tab时滚动到顶部
+  useEffect(() => {
+    if (contentRef.current && deviceType === 'mobile') {
+      contentRef.current.scrollTop = 0
+    }
+  }, [activeTab, deviceType])
 
   // 三层检查：发送消息时的检查逻辑
   const handleBalanceCheck = () => {
@@ -119,7 +127,7 @@ const MainApp = ({
       {deviceType === 'mobile' ? (
         <>
           {/* 手机端: content在前, Sidebar在后(底部) */}
-          <div className="main-app-content">
+          <div ref={contentRef} className="main-app-content">
             {renderContent()}
           </div>
           <Sidebar activeTab={activeTab} onTabChange={setActiveTab} deviceType={deviceType} />
@@ -128,7 +136,7 @@ const MainApp = ({
         <>
           {/* 桌面端/车机端: Sidebar在前(左侧), content在后 */}
           <Sidebar activeTab={activeTab} onTabChange={setActiveTab} deviceType={deviceType} />
-          <div className="main-app-content">
+          <div ref={contentRef} className="main-app-content">
             {renderContent()}
           </div>
         </>
