@@ -94,11 +94,11 @@ const MainApp = ({
           />
         )
       case 'roadbook':
-        return <Roadbook />
+        return <Roadbook isDarkMode={isDarkMode} />
       case 'tasks':
-        return <Tasks />
-      case 'deploy':
-        return <BotDeploy isDarkMode={isDarkMode} />
+        return <Tasks isDarkMode={isDarkMode} />
+      case 'botDeploy':
+        return <BotDeploy isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
       case 'profile':
         return (
           <Profile
