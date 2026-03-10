@@ -8,6 +8,7 @@
 
 /* 顶部导航栏 */
 .chat-header {
+    position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -296,6 +297,7 @@
 /* 响应式 */
 @media (max-width: 768px) {
   .chat-header {
+    position: absolute;
     padding: 12px 16px;
   }
   
@@ -390,6 +392,7 @@
 }
 
 .chat-container.car .chat-header {
+    position: absolute;
   padding: 24px 32px;
 }
 
@@ -511,6 +514,7 @@
 
 /* 车机端通话中调整布局 */
 .chat-container.car:has(.voice-call-timer) .chat-header {
+    position: absolute;
   margin-top: 48px;
 }
 
@@ -539,7 +543,7 @@
 
   /* 顶部菜单栏固定 */
   .chat-header {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -558,7 +562,7 @@
 
   /* 底部输入框固定 - 在底部菜单栏上方 */
   .chat-input-area {
-    position: fixed;
+    position: absolute;
     bottom: 70px; /* 底部菜单栏高度 */
     left: 0;
     right: 0;
