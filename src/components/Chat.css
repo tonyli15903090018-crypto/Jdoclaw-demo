@@ -529,10 +529,12 @@
   }
 }
 
+
 /* 手机端固定布局 - 顶部菜单栏和底部输入框+菜单栏常驻 */
 @media (max-width: 768px) {
   .chat-container {
     position: relative;
+    height: 100%;
   }
 
   /* 顶部菜单栏固定 */
@@ -544,11 +546,13 @@
     z-index: 100;
   }
 
-  /* 聊天内容区 - 计算高度,留出顶部和底部空间 */
+  /* 聊天内容区 - 绝对定位,留出顶部和底部空间 */
   .chat-messages {
-    margin-top: 60px; /* 顶部菜单栏高度 */
-    margin-bottom: 140px; /* 底部输入框(60px) + 菜单栏(70px) + 间距(10px) */
-    height: calc(100vh - 200px);
+    position: absolute;
+    top: 60px; /* 顶部菜单栏高度 */
+    bottom: 140px; /* 底部输入框(60px) + 菜单栏(70px) + 间距(10px) */
+    left: 0;
+    right: 0;
     overflow-y: auto;
   }
 

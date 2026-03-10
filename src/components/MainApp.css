@@ -484,3 +484,16 @@
   background: var(--bg-primary);
 }
 
+
+/* 手机端布局适配 - 为底部菜单栏留空间 */
+@media (max-width: 768px) {
+  .main-app-wrapper {
+    height: 100%;
+    padding-bottom: 70px; /* 底部菜单栏高度 */
+  }
+
+  .main-app-content {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
