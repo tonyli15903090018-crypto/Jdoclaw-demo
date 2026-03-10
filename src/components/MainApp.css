@@ -514,3 +514,21 @@
   overflow-y: auto;
   min-height: 0; /* 防止flex item撑大 */
 }
+
+/* 响应式: 宽度<500px强制手机端布局 (iPhone17Container是393px) */
+@media (max-width: 500px) {
+  .main-app-wrapper {
+    flex-direction: column !important;
+  }
+  
+  .main-app-wrapper .main-app-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  
+  /* 确保Sidebar在底部 */
+  .main-app-wrapper > :last-child {
+    order: 999; /* Sidebar总是最后 */
+  }
+}
