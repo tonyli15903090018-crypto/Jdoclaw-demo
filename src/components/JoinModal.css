@@ -16,7 +16,7 @@
   padding: 40px 32px;
   max-width: 480px;
   width: 90%;
-  max-height: 90vh;
+  max-height: calc(100vh - 150px);
   overflow-y: auto;
   box-shadow: var(--shadow-lg);
   position: relative;
@@ -187,5 +187,13 @@
   
   .price-amount {
     font-size: 48px;
+  }
+}
+
+/* 手机端高度限制 - 为底部菜单栏留空间 */
+@media (max-width: 768px) {
+  .modal-content {
+    max-height: calc(100vh - 140px);
+    margin-bottom: 80px;
   }
 }

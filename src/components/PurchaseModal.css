@@ -172,3 +172,11 @@
     position: static;
   }
 }
+
+/* 手机端高度限制 - 为底部菜单栏留空间 */
+@media (max-width: 768px) {
+  .modal-content {
+    max-height: calc(100vh - 140px);
+    margin-bottom: 80px;
+  }
+}
