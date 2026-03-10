@@ -1,81 +1,73 @@
 .create-bot-container {
-  min-height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 24px;
+  padding: 16px;
   position: relative;
+  overflow: hidden;
 }
 
 .create-bot-card {
   width: 100%;
-  max-width: 520px;
+  max-width: 340px;
   background: var(--bg-primary);
-  border-radius: 24px;
-  padding: 48px 40px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: fadeInUp 0.6s ease-out;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-height: calc(100% - 32px);
+  overflow-y: auto;
 }
 
 .create-bot-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .create-bot-title {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .create-bot-subtitle {
-  font-size: 14px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
 .create-bot-form {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
 }
 
 .bot-preview {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 32px;
+  gap: 12px;
+  padding: 16px;
   background: var(--bg-secondary);
-  border-radius: 16px;
+  border-radius: 12px;
   border: 2px dashed var(--border-color);
 }
 
 .bot-avatar-large {
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: var(--primary-red-light);
-  border: 4px solid var(--primary-red);
+  border: 3px solid var(--primary-red);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64px;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  font-size: 40px;
 }
 
 .bot-name-preview {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -83,36 +75,27 @@
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  position: relative;
+  gap: 6px;
 }
 
 .form-label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.form-hint {
-  position: absolute;
-  top: 8px;
-  right: 0;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
 .avatar-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
 .avatar-option {
   aspect-ratio: 1;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--bg-secondary);
-  font-size: 32px;
+  font-size: 24px;
   cursor: pointer;
   transition: all var(--transition-speed);
   display: flex;
@@ -122,7 +105,7 @@
 
 .avatar-option:hover {
   border-color: var(--primary-red);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .avatar-option.active {
@@ -131,154 +114,68 @@
   transform: scale(1.05);
 }
 
+.input {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 12px;
+  outline: none;
+  transition: all var(--transition-speed);
+}
+
+.input:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 2px var(--primary-red-light);
+}
+
 .create-btn {
   width: 100%;
-  padding: 16px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 13px;
+  border: none;
+  border-radius: 7px;
+  background: var(--primary-red);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.create-btn:hover {
+  background: var(--primary-red-hover);
 }
 
 .create-note {
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
   color: var(--text-secondary);
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
-@media (max-width: 480px) {
-  .create-bot-card {
-    padding: 32px 24px;
-  }
-  
-  .bot-avatar-large {
-    width: 100px;
-    height: 100px;
-    font-size: 56px;
-  }
-  
-  .bot-name-preview {
-    font-size: 20px;
-  }
-  
-  .avatar-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  
-  .avatar-option {
-    font-size: 28px;
-  }
+.theme-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-/* 手机端适配 */
-.create-bot-container.mobile {
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.create-bot-container.mobile .create-bot-card {
-  max-width: 100%;
-  padding: 32px 24px;
-}
-
-.create-bot-container.mobile .avatar-grid {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-/* 车机端适配 */
-.create-bot-container.car .create-bot-card {
-  max-width: 800px;
-  padding: 56px 48px;
-}
-
-.create-bot-container.car .create-bot-title {
-  font-size: 36px;
-}
-
-.create-bot-container.car .bot-avatar-large {
-  width: 160px;
-  height: 160px;
-  font-size: 80px;
-}
-
-.create-bot-container.car .bot-name-preview {
-  font-size: 32px;
-}
-
-.create-bot-container.car .input {
-  padding: 20px;
-  font-size: 22px;
-}
-
-.create-bot-container.car .avatar-grid {
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
-}
-
-.create-bot-container.car .avatar-option {
-  font-size: 48px;
-  /* 保持aspect-ratio，不添加padding */
-}
-
-.create-bot-container.car .create-btn {
-  padding: 24px;
-  font-size: 22px;
-}
-
-/* 手机端自适应 - 紧凑布局 */
-@media (max-width: 500px) {
-  .create-bot-card {
-    padding: 24px 20px;
-    max-width: 100%;
-  }
-  
-  .create-bot-header {
-    margin-bottom: 24px;
-  }
-  
-  .create-bot-title {
-    font-size: 22px;
-    margin-bottom: 6px;
-  }
-  
-  .create-bot-subtitle {
-    font-size: 12px;
-  }
-  
-  .create-bot-form {
-    gap: 20px;
-  }
-  
-  .bot-preview {
-    padding: 20px;
-    gap: 12px;
-  }
-  
-  .bot-avatar-large {
-    width: 80px;
-    height: 80px;
-    font-size: 40px;
-  }
-  
-  .bot-name-preview {
-    font-size: 18px;
-  }
-  
-  .avatar-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  
-  .avatar-option {
-    font-size: 24px;
-  }
-  
-  .input {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-  
-  .create-btn {
-    padding: 12px;
-    font-size: 14px;
-  }
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
 }
