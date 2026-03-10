@@ -154,15 +154,6 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onB
         
         <div className="header-right">
           <span className="user-name">{userName}</span>
-          {deviceType === 'car' && (
-            <button 
-              className={`icon-btn voice-call-btn ${isVoiceCalling ? 'calling' : ''}`}
-              onClick={handleVoiceCall} 
-              title={isVoiceCalling ? '结束通话' : '语音通话'}
-            >
-              {isVoiceCalling ? '📞' : '☎️'}
-            </button>
-          )}
           <button className="icon-btn" onClick={toggleDarkMode} title="切换主题">
             {isDarkMode ? '☀️' : '🌙'}
           </button>
@@ -242,6 +233,17 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onB
               />
             </svg>
           </button>
+          
+          {/* 车机端语音通话按钮 - 在底部输入框右侧 */}
+          {deviceType === 'car' && (
+            <button 
+              className={`icon-btn voice-call-btn ${isVoiceCalling ? 'calling' : ''}`}
+              onClick={handleVoiceCall} 
+              title={isVoiceCalling ? '结束通话' : '语音通话'}
+            >
+              📞
+            </button>
+          )}
         </div>
       </footer>
     </div>

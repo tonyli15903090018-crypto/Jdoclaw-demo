@@ -497,3 +497,16 @@
     overflow-y: auto;
   }
 }
+
+/* 手机端: column布局,Sidebar自然在底部 */
+@media (max-width: 768px) {
+  .main-app-wrapper {
+    flex-direction: column;
+    padding-bottom: 0; /* 移除之前添加的padding */
+  }
+
+  .main-app-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
