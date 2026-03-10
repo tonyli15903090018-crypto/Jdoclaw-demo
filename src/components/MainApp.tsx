@@ -114,12 +114,24 @@ const MainApp = ({
   }
 
   return (
-    <div className={`main-app-wrapper ${isDarkMode ? 'dark' : ''}`}>
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} deviceType={deviceType} />
-      <div className="main-app-content">
-        {renderContent()}
-      </div>
-
+    <div className={`main-app-wrapper ${isDarkMode ? 'dark' : ''} ${deviceType === 'mobile' ? 'mobile' : ''}`}>
+      {deviceType === 'mobile' ? (
+        <>
+          {/* 手机端: content在前, Sidebar在后(底部) */}
+          <div className="main-app-content">
+            {renderContent()}
+          </div>
+          <Sidebar activeTab={activeTab} onTabChange={setActiveTab} deviceType={deviceType} />
+        </>
+      ) : (
+        <>
+          {/* 桌面端/车机端: Sidebar在前(左侧), content在后 */}
+          <Sidebar activeTab={activeTab} onTabChange={setActiveTab} deviceType={deviceType} />
+          <div className="main-app-content">
+            {renderContent()}
+          </div>
+        </>
+      )}
       {/* 三层弹窗 */}
       {modalType === 'join' && (
         <JoinModal

@@ -510,3 +510,13 @@
     overflow-y: auto;
   }
 }
+
+/* 手机端专用样式 */
+.main-app-wrapper.mobile {
+  flex-direction: column;
+}
+
+.main-app-wrapper.mobile .main-app-content {
+  flex: 1;
+  overflow-y: auto;
+}
