@@ -190,49 +190,65 @@
 }
 
 /* 手机端自适应 - 减小间距和字体 */
+/* 手机端完全自适应 - 无滚动条 */
 @media (max-width: 500px) {
+  .login-container {
+    min-height: auto;
+    padding: 16px;
+  }
+  
   .login-card {
-    padding: 24px 20px;
+    padding: 20px 16px;
     max-width: 100%;
+    box-shadow: none; /* 手机端去掉阴影节省空间 */
+  }
+  
+  .login-header {
+    margin-bottom: 16px;
   }
   
   .brand-name {
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 4px;
   }
   
   .brand-slogan {
-    font-size: 12px;
-  }
-  
-  .login-header {
-    margin-bottom: 20px;
+    font-size: 11px;
   }
   
   .login-tabs {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    padding: 3px;
   }
   
   .tab {
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  .login-form {
+    gap: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 0;
+  }
+  
+  .input {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+  
+  .btn {
     padding: 10px;
     font-size: 13px;
   }
   
-  .login-form {
-    gap: 12px;
-  }
-  
-  .input {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-  
-  .btn {
-    padding: 12px;
-    font-size: 14px;
-  }
-  
   .login-footer {
-    margin-top: 16px;
+    margin-top: 12px;
+  }
+  
+  .footer-text {
+    font-size: 11px;
   }
 }
