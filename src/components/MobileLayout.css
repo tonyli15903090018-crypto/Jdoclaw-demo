@@ -1,0 +1,14 @@
+.mobile-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.mobile-content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0; /* 防止flex item撑大 */
+}
+
+/* Sidebar会自然在底部,因为在DOM最后 */

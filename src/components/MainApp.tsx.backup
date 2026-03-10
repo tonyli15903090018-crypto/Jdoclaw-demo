@@ -113,7 +113,6 @@ const MainApp = ({
     }
   }
 
-  console.log("=== MainApp deviceType ===", deviceType)
   return (
     <div className={`main-app-wrapper ${isDarkMode ? 'dark' : ''} ${deviceType === 'mobile' ? 'mobile' : ''}`}>
       {deviceType === 'mobile' ? (
