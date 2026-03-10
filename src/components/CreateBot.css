@@ -1,12 +1,11 @@
 .create-bot-container {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 24px;
   position: relative;
-  overflow: hidden;
 }
 
 .create-bot-card {
@@ -17,17 +16,6 @@
   padding: 48px 40px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: fadeInUp 0.6s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .create-bot-header {
@@ -96,12 +84,21 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
 }
 
 .form-label {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
+}
+
+.form-hint {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 
 .avatar-grid {
@@ -134,39 +131,10 @@
   transform: scale(1.05);
 }
 
-.input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  font-size: 14px;
-  outline: none;
-  transition: all var(--transition-speed);
-}
-
-.input:focus {
-  border-color: var(--primary-red);
-  box-shadow: 0 0 0 3px var(--primary-red-light);
-}
-
 .create-btn {
   width: 100%;
   padding: 16px;
   font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  background: var(--primary-red);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-speed);
-}
-
-.create-btn:hover {
-  background: var(--primary-red-hover);
-  transform: translateY(-1px);
 }
 
 .create-note {
@@ -176,93 +144,152 @@
   margin-top: 16px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all var(--transition-speed);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+@media (max-width: 480px) {
+  .create-bot-card {
+    padding: 32px 24px;
+  }
+  
+  .bot-avatar-large {
+    width: 100px;
+    height: 100px;
+    font-size: 56px;
+  }
+  
+  .bot-name-preview {
+    font-size: 20px;
+  }
+  
+  .avatar-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  
+  .avatar-option {
+    font-size: 28px;
+  }
 }
 
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
+/* 手机端适配 */
+.create-bot-container.mobile {
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-/* 手机端样式 - 只对 data-device="mobile" 生效 */
-[data-device="mobile"] .create-bot-card {
+.create-bot-container.mobile .create-bot-card {
+  max-width: 100%;
+  padding: 32px 24px;
+}
+
+.create-bot-container.mobile .avatar-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* 车机端适配 */
+.create-bot-container.car .create-bot-card {
+  max-width: 800px;
+  padding: 56px 48px;
+}
+
+.create-bot-container.car .create-bot-title {
+  font-size: 36px;
+}
+
+.create-bot-container.car .bot-avatar-large {
+  width: 160px;
+  height: 160px;
+  font-size: 80px;
+}
+
+.create-bot-container.car .bot-name-preview {
+  font-size: 32px;
+}
+
+.create-bot-container.car .input {
+  padding: 20px;
+  font-size: 22px;
+}
+
+.create-bot-container.car .avatar-grid {
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.create-bot-container.car .avatar-option {
+  font-size: 48px;
+  /* 保持aspect-ratio，不添加padding */
+}
+
+.create-bot-container.car .create-btn {
+  padding: 24px;
+  font-size: 22px;
+}
+
+/* 手机端紧凑样式 */
+.create-bot-container.mobile {
+  min-height: 100%;
+  padding: 16px;
+}
+
+.create-bot-container.mobile .create-bot-card {
   max-width: 340px;
-  padding: 24px 20px;
+  padding: 32px 24px;
   max-height: calc(100% - 32px);
   overflow-y: auto;
 }
 
-[data-device="mobile"] .create-bot-header {
-  margin-bottom: 20px;
+.create-bot-container.mobile .create-bot-header {
+  margin-bottom: 24px;
 }
 
-[data-device="mobile"] .create-bot-title {
-  font-size: 20px;
-  margin-bottom: 4px;
+.create-bot-container.mobile .create-bot-title {
+  font-size: 22px;
+  margin-bottom: 6px;
 }
 
-[data-device="mobile"] .create-bot-subtitle {
-  font-size: 11px;
+.create-bot-container.mobile .create-bot-subtitle {
+  font-size: 12px;
 }
 
-[data-device="mobile"] .create-bot-form {
-  gap: 16px;
+.create-bot-container.mobile .create-bot-form {
+  gap: 20px;
 }
 
-[data-device="mobile"] .bot-preview {
-  padding: 16px;
+.create-bot-container.mobile .bot-preview {
+  padding: 20px;
   gap: 12px;
 }
 
-[data-device="mobile"] .bot-avatar-large {
+.create-bot-container.mobile .bot-avatar-large {
   width: 80px;
   height: 80px;
   font-size: 40px;
-  border-width: 3px;
 }
 
-[data-device="mobile"] .bot-name-preview {
+.create-bot-container.mobile .bot-name-preview {
   font-size: 18px;
 }
 
-[data-device="mobile"] .avatar-grid {
+.create-bot-container.mobile .avatar-grid {
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
-[data-device="mobile"] .avatar-option {
+.create-bot-container.mobile .avatar-option {
   font-size: 24px;
 }
 
-[data-device="mobile"] .input {
-  padding: 9px 11px;
-  font-size: 12px;
+.create-bot-container.mobile .input {
+  padding: 10px 12px;
+  font-size: 14px;
 }
 
-[data-device="mobile"] .create-btn {
-  padding: 10px;
-  font-size: 13px;
+.create-bot-container.mobile .create-btn {
+  padding: 12px;
+  font-size: 14px;
 }
 
-[data-device="mobile"] .theme-toggle {
-  width: 36px;
-  height: 36px;
-  font-size: 16px;
+.create-bot-container.mobile .theme-toggle {
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
 }
