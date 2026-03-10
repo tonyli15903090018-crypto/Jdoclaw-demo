@@ -446,3 +446,85 @@
 .chat-container.car .voice-call-btn {
   font-size: 32px;
 }
+
+/* 语音通话倒计时条 (车机端) */
+.voice-call-timer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(135deg, #e60012 0%, #ff4757 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(230, 0, 18, 0.3);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(230, 0, 18, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(230, 0, 18, 0.5);
+  }
+}
+
+.timer-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-weight: 600;
+}
+
+.timer-icon {
+  font-size: 24px;
+  animation: phone-ring 1s ease-in-out infinite;
+}
+
+@keyframes phone-ring {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  10%, 30% {
+    transform: rotate(-10deg);
+  }
+  20%, 40% {
+    transform: rotate(10deg);
+  }
+}
+
+.timer-text {
+  font-size: 16px;
+}
+
+.timer-duration {
+  font-size: 20px;
+  font-family: 'Courier New', monospace;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* 车机端通话中调整布局 */
+.chat-container.car:has(.voice-call-timer) .chat-header {
+  margin-top: 48px;
+}
+
+.voice-call-btn.calling {
+  background: var(--primary-red);
+  color: white;
+  animation: btn-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes btn-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

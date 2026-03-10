@@ -30,7 +30,9 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onB
   const [isTyping, setIsTyping] = useState(false)
   const [userName, setUserName] = useState('演示用户')
   const [isVoiceCalling, setIsVoiceCalling] = useState(false)
+  const [callDuration, setCallDuration] = useState(0) // 通话时长(秒)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const callTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     // 从 localStorage 读取用户信息
@@ -44,6 +46,28 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onB
       }
     }
   }, [])
+
+  // 语音通话计时器
+  useEffect(() => {
+    if (isVoiceCalling) {
+      setCallDuration(0)
+      callTimerRef.current = setInterval(() => {
+        setCallDuration(prev => prev + 1)
+      }, 1000)
+    } else {
+      if (callTimerRef.current) {
+        clearInterval(callTimerRef.current)
+        callTimerRef.current = null
+      }
+      setCallDuration(0)
+    }
+
+    return () => {
+      if (callTimerRef.current) {
+        clearInterval(callTimerRef.current)
+      }
+    }
+  }, [isVoiceCalling])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -96,12 +120,29 @@ const Chat = ({ onLogout, isDarkMode, toggleDarkMode, deviceType = 'mobile', onB
     return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
   }
 
+  const formatCallDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+  }
+
   const handleVoiceCall = () => {
     setIsVoiceCalling(!isVoiceCalling)
   }
 
   return (
     <div className={`chat-container ${deviceType}`}>
+      {/* 语音通话倒计时条 (仅车机端显示) */}
+      {deviceType === 'car' && isVoiceCalling && (
+        <div className="voice-call-timer">
+          <div className="timer-content">
+            <span className="timer-icon">📞</span>
+            <span className="timer-text">通话中</span>
+            <span className="timer-duration">{formatCallDuration(callDuration)}</span>
+          </div>
+        </div>
+      )}
+
       {/* 顶部导航栏 */}
       <header className="chat-header">
         <div className="header-left">
