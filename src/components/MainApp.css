@@ -532,3 +532,15 @@
     order: 999; /* Sidebar总是最后 */
   }
 }
+
+/* 手机端强制column布局 - 使用属性选择器,优先级最高 */
+.main-app-wrapper[data-device="mobile"] {
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.main-app-wrapper[data-device="mobile"] .main-app-content {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  min-height: 0 !important;
+}

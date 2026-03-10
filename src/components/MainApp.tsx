@@ -115,7 +115,7 @@ const MainApp = ({
 
   console.log("=== MainApp deviceType ===", deviceType)
   return (
-    <div className={`main-app-wrapper ${isDarkMode ? 'dark' : ''} ${deviceType === 'mobile' ? 'mobile' : ''}`}>
+    <div data-device={deviceType} className={`main-app-wrapper ${isDarkMode ? 'dark' : ''} ${deviceType === 'mobile' ? 'mobile' : ''}`}>
       {deviceType === 'mobile' ? (
         <>
           {/* 手机端: content在前, Sidebar在后(底部) */}
