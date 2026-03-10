@@ -2,7 +2,7 @@
 .main-app-wrapper {
   position: relative;
   display: flex;
-  height: 100vh;
+  height: 100%;
   background: var(--bg-primary);
   transition: all 0.3s ease;
 }
@@ -16,7 +16,7 @@
 .main-app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   background: var(--bg-primary);
   transition: all 0.3s ease;
 }
@@ -474,7 +474,7 @@
 /* Sidebar + Content 布局 */
 .main-app {
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
