@@ -2,6 +2,9 @@ import { useState, useEffect, type ReactNode } from 'react'
 import Login from './components/Login'
 import CreateBot from './components/CreateBot'
 import MainApp from './components/MainApp'
+import Profile from './components/Profile'
+import BotDeploy from './components/BotDeploy'
+import BottomNav, { type BottomNavTab } from './components/BottomNav'
 import DeviceSwitcher from './components/DeviceSwitcher'
 import type { UserInfo, DeviceType } from './types'
 import './App.css'
@@ -28,6 +31,7 @@ function App() {
   const [stage, setStage] = useState<AppStage>('login')
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [deviceType, setDeviceType] = useState<DeviceType>('mobile')
+  const [activeBottomTab, setActiveBottomTab] = useState<BottomNavTab>('chat')
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: '演示用户',
     email: 'demo@jdoclaw.ai',
@@ -62,11 +66,13 @@ function App() {
     const newUserInfo = { 
       ...userInfo, 
       botName, 
-      botAvatar
+      botAvatar,
+      selectedModel: 'GPT-4'
     }
     setUserInfo(newUserInfo)
     localStorage.setItem('user_info', JSON.stringify(newUserInfo))
     setStage('main')
+    setActiveBottomTab('chat')
     localStorage.setItem('app_stage', 'main')
   }
 
@@ -118,6 +124,7 @@ function App() {
   const handleLogout = () => {
     localStorage.clear()
     setStage('login')
+    setActiveBottomTab('chat')
     setUserInfo({
       username: '演示用户',
       email: 'demo@jdoclaw.ai',
@@ -139,13 +146,70 @@ function App() {
     localStorage.setItem('device_type', device)
   }
 
-  const renderContent = () => {
-    switch (stage) {
-      case 'login':
-        return <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
-      case 'createBot':
-        return <CreateBot onComplete={handleCreateBot} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
-      case 'main':
+  const handleBottomTabChange = (tab: BottomNavTab) => {
+    setActiveBottomTab(tab)
+    localStorage.setItem('active_tab', tab)
+  }
+
+  const handleModelChange = (model: string) => {
+    const newUserInfo = { ...userInfo, selectedModel: model }
+    setUserInfo(newUserInfo)
+    localStorage.setItem('user_info', JSON.stringify(newUserInfo))
+  }
+
+  const handleOpenProfile = () => {
+    setActiveBottomTab('profile')
+  }
+
+  const handleRenew = () => {
+    // 打开续费modal或跳转到购买页面
+    alert('续费功能开发中...')
+  }
+
+  // 渲染主内容(login/createBot/main阶段)
+  const renderMainContent = () => {
+    if (stage === 'main') {
+      // main阶段: 根据activeBottomTab和deviceType渲染不同内容
+      if (deviceType === 'mobile') {
+        // 手机端: 根据底部Tab显示不同页面
+        switch (activeBottomTab) {
+          case 'chat':
+            return (
+              <MainApp
+                userInfo={userInfo}
+                deviceType={deviceType}
+                onLogout={handleLogout}
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
+                onJoinComplete={handleJoinComplete}
+                onPurchaseComplete={handlePurchaseComplete}
+                onRechargeComplete={handleRechargeComplete}
+                onOpenProfile={handleOpenProfile}
+              />
+            )
+          case 'deploy':
+            return (
+              <BotDeploy
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
+                deviceType={deviceType}
+              />
+            )
+          case 'profile':
+            return (
+              <Profile
+                userInfo={userInfo}
+                onBack={() => setActiveBottomTab('chat')}
+                onRenew={handleRenew}
+                onModelChange={handleModelChange}
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
+                deviceType={deviceType}
+              />
+            )
+        }
+      } else {
+        // 电脑端和车机端: 默认显示聊天,通过按钮跳转
         return (
           <MainApp
             userInfo={userInfo}
@@ -156,7 +220,34 @@ function App() {
             onJoinComplete={handleJoinComplete}
             onPurchaseComplete={handlePurchaseComplete}
             onRechargeComplete={handleRechargeComplete}
+            onOpenProfile={handleOpenProfile}
           />
+        )
+      }
+    }
+
+    return null
+  }
+
+  const renderContent = () => {
+    switch (stage) {
+      case 'login':
+        return <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
+      case 'createBot':
+        return <CreateBot onComplete={handleCreateBot} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} deviceType={deviceType} />
+      case 'main':
+        return (
+          <>
+            {renderMainContent()}
+            {/* 底部Tab导航(仅手机端+main阶段) */}
+            {deviceType === 'mobile' && (
+              <BottomNav
+                activeTab={activeBottomTab}
+                onTabChange={handleBottomTabChange}
+                deviceType={deviceType}
+              />
+            )}
+          </>
         )
       default:
         return null
