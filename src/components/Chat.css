@@ -1,7 +1,7 @@
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background: var(--bg-primary);
 }
@@ -553,4 +553,9 @@
     flex-shrink: 0;
     /* 不用fixed,作为flex最后一项 */
   }
+}
+
+/* 手机端聊天容器高度适配 */
+.chat-container.mobile {
+  height: 100%;
 }
