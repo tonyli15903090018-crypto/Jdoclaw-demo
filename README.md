@@ -1,73 +1,60 @@
-# React + TypeScript + Vite
+# Jdoclaw-demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+基于OpenClaw框架的多端AI助手演示项目。
 
-Currently, two official plugins are available:
+## 项目简介
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+三个独立版本的AI对话助手:
+- **小程序版**(手机端)
+- **Web版**(桌面端)  
+- **车机版**(车载中控屏)
 
-## React Compiler
+## 技术栈
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite 7
+- CSS Modules
 
-## Expanding the ESLint configuration
+## 核心功能
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **聊天模块** - AI对话、语音通话(车机版)
+2. **路书管理** - 旅行规划、景点推荐
+3. **日程管家** - 每日任务、智能提醒
+4. **机器人部署** - QQ/飞书/企微机器人配置
+5. **个人中心** - 会员、沙箱、API充值
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 三端适配
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- 手机端: `height: 100%` 适配容器,紧凑布局
+- 车机端: `height: 100vh` 填满视口,大字号大按钮
+- 桌面端: 标准Web布局
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 开发
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 构建
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+## 部署
+
+推送到master分支,GitHub Actions自动部署到GitHub Pages。
+
+## 需求文档
+
+详见 `/docs/REQUIREMENTS_FINAL.md`
+
+## 项目地址
+
+https://github.com/tonyli15903090018-crypto/homeassistant-ai-chat
+
+---
+
+**开发时间**: 2026-03-10  
+**开发者**: 美丽龙虾 🦞
