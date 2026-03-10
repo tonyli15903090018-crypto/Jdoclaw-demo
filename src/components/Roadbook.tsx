@@ -39,7 +39,6 @@ const Roadbook = ({}: RoadbookProps) => {
     <div className="roadbook-container">
       <div className="roadbook-header">
         <h1>🗺️ 我的路书</h1>
-        <button className="create-roadbook-btn">+ 创建新路书</button>
       </div>
 
       <div className="roadbook-stats">

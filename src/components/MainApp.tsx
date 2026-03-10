@@ -115,7 +115,7 @@ const MainApp = ({
 
   return (
     <div className={`main-app-wrapper ${isDarkMode ? 'dark' : ''}`}>
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} deviceType={deviceType} />
       <div className="main-app-content">
         {renderContent()}
       </div>

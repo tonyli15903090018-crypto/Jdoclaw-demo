@@ -4,11 +4,15 @@ import './Tasks.css'
 interface Task {
   id: number
   title: string
-  description: string
-  status: 'pending' | 'in-progress' | 'completed'
-  priority: 'low' | 'medium' | 'high'
-  dueDate: string
-  tags: string[]
+  time?: string
+  completed: boolean
+}
+
+interface CronTask {
+  id: number
+  title: string
+  schedule: string
+  enabled: boolean
 }
 
 interface TasksProps {
@@ -16,165 +20,120 @@ interface TasksProps {
 }
 
 const Tasks = ({}: TasksProps) => {
-  const [tasks] = useState<Task[]>([
-    {
-      id: 1,
-      title: '完成川藏线路书规划',
-      description: '详细规划沿途景点、住宿和加油站',
-      status: 'in-progress',
-      priority: 'high',
-      dueDate: '2026-03-15',
-      tags: ['路书', '自驾']
-    },
-    {
-      id: 2,
-      title: '预订海南酒店',
-      description: '三亚、海口各3晚酒店预订',
-      status: 'pending',
-      priority: 'medium',
-      dueDate: '2026-03-20',
-      tags: ['住宿', '海南']
-    },
-    {
-      id: 3,
-      title: '车辆保养检查',
-      description: '出发前全面检查车辆状况',
-      status: 'completed',
-      priority: 'high',
-      dueDate: '2026-03-05',
-      tags: ['车辆', '维护']
-    },
-    {
-      id: 4,
-      title: '准备露营装备',
-      description: '帐篷、睡袋、炊具等',
-      status: 'pending',
-      priority: 'medium',
-      dueDate: '2026-03-18',
-      tags: ['装备', '露营']
-    }
+  // 定时任务数据
+  const [cronTasks] = useState<CronTask[]>([
+    { id: 1, title: '每日天气播报', schedule: '每天 07:00', enabled: true },
+    { id: 2, title: '工作日提醒', schedule: '工作日 09:00', enabled: true },
+    { id: 3, title: '晚间总结提醒', schedule: '每天 21:00', enabled: false }
   ])
 
-  const getPriorityColor = (priority: Task['priority']) => {
-    switch (priority) {
-      case 'low': return '#27ae60'
-      case 'medium': return '#f39c12'
-      case 'high': return '#e74c3c'
-    }
-  }
+  // 今日待办
+  const [todayTasks] = useState<Task[]>([
+    { id: 1, title: '完成川藏线路书规划', time: '14:00', completed: false },
+    { id: 2, title: '预订海南酒店', time: '16:00', completed: false },
+    { id: 3, title: '准备露营装备', completed: false }
+  ])
 
-  const tasksByStatus = {
-    pending: tasks.filter(t => t.status === 'pending'),
-    inProgress: tasks.filter(t => t.status === 'in-progress'),
-    completed: tasks.filter(t => t.status === 'completed')
+  // 今日已完成
+  const [completedTasks] = useState<Task[]>([
+    { id: 1, title: '车辆保养检查', time: '09:00', completed: true },
+    { id: 2, title: '购买旅行用品', time: '11:30', completed: true }
+  ])
+
+  // 今日锦囊数据(由AI生成)
+  const todayTips = {
+    weather: '☀️ 今日晴,气温 12-23°C',
+    clothing: '👔 建议穿着: 长袖衬衫+薄外套,早晚温差大注意保暖',
+    items: '🎒 记得带: 雨伞、水杯、充电宝',
+    advice: '💡 今日适合: 外出办事、户外活动。建议下午3点前完成待办任务'
   }
 
   return (
     <div className="tasks-container">
       <div className="tasks-header">
-        <h1>✅ 我的任务</h1>
-        <button className="create-task-btn">+ 创建任务</button>
+        <h1>📅 日程管家</h1>
       </div>
 
-      <div className="tasks-stats">
-        <div className="stat-item">
-          <span className="stat-icon">⏳</span>
-          <span className="stat-label">待处理</span>
-          <span className="stat-value">{tasksByStatus.pending.length}</span>
+      {/* 定时任务 */}
+      <section className="tasks-section">
+        <h2 className="section-title">⏰ 定时任务</h2>
+        <div className="cron-tasks-list">
+          {cronTasks.map(task => (
+            <div key={task.id} className="cron-task-item">
+              <div className="cron-task-info">
+                <span className="cron-task-title">{task.title}</span>
+                <span className="cron-task-schedule">{task.schedule}</span>
+              </div>
+              <label className="cron-task-toggle">
+                <input type="checkbox" checked={task.enabled} readOnly />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+          ))}
         </div>
-        <div className="stat-item">
-          <span className="stat-icon">🔄</span>
-          <span className="stat-label">进行中</span>
-          <span className="stat-value">{tasksByStatus.inProgress.length}</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-icon">✅</span>
-          <span className="stat-label">已完成</span>
-          <span className="stat-value">{tasksByStatus.completed.length}</span>
-        </div>
-      </div>
+        <p className="section-note">💡 定时任务由小龙虾AI自动管理</p>
+      </section>
 
-      <div className="tasks-board">
-        <div className="task-column">
-          <h3>⏳ 待处理</h3>
-          {tasksByStatus.pending.map(task => (
-            <div key={task.id} className="task-card">
-              <div className="task-header">
-                <h4>{task.title}</h4>
-                <div 
-                  className="priority-badge" 
-                  style={{ background: getPriorityColor(task.priority) }}
-                >
-                  {task.priority === 'high' ? '高' : task.priority === 'medium' ? '中' : '低'}
-                </div>
-              </div>
-              <p className="task-desc">{task.description}</p>
-              <div className="task-tags">
-                {task.tags.map((tag, idx) => (
-                  <span key={idx} className="task-tag">{tag}</span>
-                ))}
-              </div>
-              <div className="task-footer">
-                <span className="due-date">📅 {task.dueDate}</span>
-                <button className="start-btn">开始</button>
+      {/* 今日锦囊 */}
+      <section className="tasks-section">
+        <h2 className="section-title">🎁 今日锦囊</h2>
+        <div className="daily-tips">
+          <div className="tip-item">
+            <span className="tip-label">{todayTips.weather}</span>
+          </div>
+          <div className="tip-item">
+            <span className="tip-label">{todayTips.clothing}</span>
+          </div>
+          <div className="tip-item">
+            <span className="tip-label">{todayTips.items}</span>
+          </div>
+          <div className="tip-item advice">
+            <span className="tip-label">{todayTips.advice}</span>
+          </div>
+        </div>
+        <p className="section-note">💡 根据天气和待办智能生成建议</p>
+      </section>
+
+      {/* 今日待办 */}
+      <section className="tasks-section">
+        <h2 className="section-title">📝 今日待办</h2>
+        <div className="today-tasks-list">
+          {todayTasks.map(task => (
+            <div key={task.id} className="today-task-item">
+              <label className="task-checkbox">
+                <input type="checkbox" checked={task.completed} readOnly />
+                <span className="checkbox-mark"></span>
+              </label>
+              <div className="task-info">
+                <span className="task-title">{task.title}</span>
+                {task.time && <span className="task-time">{task.time}</span>}
               </div>
             </div>
           ))}
         </div>
+        {todayTasks.length === 0 && (
+          <p className="empty-state">🎉 今天没有待办事项</p>
+        )}
+      </section>
 
-        <div className="task-column">
-          <h3>🔄 进行中</h3>
-          {tasksByStatus.inProgress.map(task => (
-            <div key={task.id} className="task-card in-progress">
-              <div className="task-header">
-                <h4>{task.title}</h4>
-                <div 
-                  className="priority-badge" 
-                  style={{ background: getPriorityColor(task.priority) }}
-                >
-                  {task.priority === 'high' ? '高' : task.priority === 'medium' ? '中' : '低'}
-                </div>
-              </div>
-              <p className="task-desc">{task.description}</p>
-              <div className="task-tags">
-                {task.tags.map((tag, idx) => (
-                  <span key={idx} className="task-tag">{tag}</span>
-                ))}
-              </div>
-              <div className="task-footer">
-                <span className="due-date">📅 {task.dueDate}</span>
-                <button className="complete-btn">完成</button>
+      {/* 今日已完成 */}
+      <section className="tasks-section">
+        <h2 className="section-title">✅ 今日已完成</h2>
+        <div className="completed-tasks-list">
+          {completedTasks.map(task => (
+            <div key={task.id} className="completed-task-item">
+              <span className="completed-mark">✓</span>
+              <div className="task-info">
+                <span className="task-title">{task.title}</span>
+                {task.time && <span className="task-time">{task.time}</span>}
               </div>
             </div>
           ))}
         </div>
-
-        <div className="task-column">
-          <h3>✅ 已完成</h3>
-          {tasksByStatus.completed.map(task => (
-            <div key={task.id} className="task-card completed">
-              <div className="task-header">
-                <h4>{task.title}</h4>
-                <div 
-                  className="priority-badge" 
-                  style={{ background: getPriorityColor(task.priority) }}
-                >
-                  {task.priority === 'high' ? '高' : task.priority === 'medium' ? '中' : '低'}
-                </div>
-              </div>
-              <p className="task-desc">{task.description}</p>
-              <div className="task-tags">
-                {task.tags.map((tag, idx) => (
-                  <span key={idx} className="task-tag">{tag}</span>
-                ))}
-              </div>
-              <div className="task-footer">
-                <span className="due-date">📅 {task.dueDate}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+        {completedTasks.length === 0 && (
+          <p className="empty-state">还没有完成的任务</p>
+        )}
+      </section>
     </div>
   )
 }
