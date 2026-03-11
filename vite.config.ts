@@ -1,8 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { viteSingleFile } from "vite-plugin-singlefile"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '/Jdoclaw-demo/',  // GitHub Pages 路径
+  plugins: [react(), viteSingleFile()],
+  base: './',  // 使用相对路径,方便本地预览
+  build: {
+    outDir: 'Jdoclaw_demo',
+    assetsInlineLimit: 100000000, // 100MB, 确保所有资源内联
+  }
 })
